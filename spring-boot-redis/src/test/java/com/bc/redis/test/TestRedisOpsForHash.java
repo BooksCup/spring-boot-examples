@@ -137,4 +137,16 @@ public class TestRedisOpsForHash {
         long result = redisDao.hIncrement(key, hashKey, delta);
         logger.info("hash incr result: " + result);
     }
+
+    /**
+     * 测试hincrby(浮点数增量值)
+     */
+    @Test
+    public void testHincrementWithDoubleDelta() {
+        String key = "hKey";
+        String hashKey = "hField2";
+        double delta = -1.2;
+        double result = redisDao.hIncrement(key, hashKey, delta);
+        logger.info("hash incr result: " + result);
+    }
 }
