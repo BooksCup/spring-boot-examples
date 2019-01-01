@@ -8,10 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -45,7 +42,7 @@ public class NginxAccessLogController {
      * @return ResponseEntity
      */
     @ApiOperation(value = "分页查询Nginx访问日志", notes = "分页查询Nginx访问日志")
-    @PostMapping(value = "")
+    @GetMapping(value = "")
     public ResponseEntity<PageImpl<NginxAccessLog>> getNginxAccessLogPage(
             @RequestParam(value = "uri", required = false) String uri,
             @RequestParam(value = "status", required = false) Integer status,
