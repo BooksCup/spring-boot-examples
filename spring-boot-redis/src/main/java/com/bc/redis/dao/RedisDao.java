@@ -818,7 +818,7 @@ public interface RedisDao {
      * @param key   键
      * @param start 区间开始
      * @param end   区间结束
-     * @return 指定区间内，有序集成员的列表
+     * @return 指定区间内的有序集成员的列表
      */
     Set<Object> zReverseRange(String key, long start, long end);
 
