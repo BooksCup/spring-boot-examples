@@ -209,4 +209,16 @@ public class TestRedisOpsForZSet {
             logger.info("value: " + value);
         }
     }
+
+    /**
+     * 测试zreverseRangeByScoreWithScores
+     */
+    @Test
+    public void testZreverseRangeByScoreWithScores() {
+        String key = "zsetKey";
+        Set<ZSetOperations.TypedTuple<Object>> tuples = redisDao.zReverseRangeByScoreWithScores(key, 1, 9);
+        for (ZSetOperations.TypedTuple<Object> tuple : tuples) {
+            logger.info("value: " + tuple.getValue() + ", score: " + tuple.getScore());
+        }
+    }
 }

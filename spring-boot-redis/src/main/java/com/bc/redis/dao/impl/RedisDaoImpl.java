@@ -1166,6 +1166,22 @@ public class RedisDaoImpl implements RedisDao {
     public Set<Object> zReverseRangeByScore(String key, double min, double max, long offset, long count) {
         return redisTemplate.opsForZSet().reverseRangeByScore(key, min, max, offset, count);
     }
+
+    /**
+     * 返回有序集中指定分数区间内的所有的成员(带有分数值)
+     * 有序集成员按分数值递减(从大到小)的次序排列
+     * 具有相同分数值的成员按字典序的逆序(reverse lexicographical order)排列
+     * 除了成员按分数值递减的次序排列这一点外，zReverseRangeByScore的其他方面和zRangeByScore一样
+     *
+     * @param key 键
+     * @param min 分数区间最小值
+     * @param max 分数区间最大值
+     * @return 指定区间内，带有分数值的有序集成员的列表
+     */
+    @Override
+    public Set<ZSetOperations.TypedTuple<Object>> zReverseRangeByScoreWithScores(String key, double min, double max) {
+        return redisTemplate.opsForZSet().reverseRangeByScoreWithScores(key, min, max);
+    }
     // ===== ops for zset end =====
 
 }
