@@ -1199,6 +1199,20 @@ public class RedisDaoImpl implements RedisDao {
                                                                                  double min, double max, long offset, long count) {
         return redisTemplate.opsForZSet().reverseRangeByScoreWithScores(key, min, max, offset, count);
     }
+
+    /**
+     * 返回有序集中成员的排名
+     * 其中有序集成员按分数值递减(从大到小)排序
+     * 排名以0为底，也就是说，分数值最大的成员排名为0
+     *
+     * @param key   键
+     * @param value 值
+     * @return 如果成员是有序集key的成员，返回value的排名。如果成员不是有序集key的成员，返回一个空指针的错误
+     */
+    @Override
+    public long zReverseRank(String key, Object value) {
+        return redisTemplate.opsForZSet().reverseRank(key, value);
+    }
     // ===== ops for zset end =====
 
 }

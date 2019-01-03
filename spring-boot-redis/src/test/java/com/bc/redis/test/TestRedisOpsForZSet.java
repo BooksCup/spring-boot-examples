@@ -233,4 +233,15 @@ public class TestRedisOpsForZSet {
             logger.info("value: " + tuple.getValue() + ", score: " + tuple.getScore());
         }
     }
+
+    /**
+     * 测试zrevrank
+     */
+    @Test
+    public void testZreverseRank() {
+        String key = "zsetKey";
+        String value = "zsetValue1";
+        long rank = redisDao.zReverseRank(key, value);
+        logger.info("value: " + value + ", rank: " + rank);
+    }
 }
