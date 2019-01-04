@@ -1213,6 +1213,18 @@ public class RedisDaoImpl implements RedisDao {
     public long zReverseRank(String key, Object value) {
         return redisTemplate.opsForZSet().reverseRank(key, value);
     }
+
+    /**
+     * 返回有序集中，成员的分数值
+     *
+     * @param key   键
+     * @param value 值(成员)
+     * @return 成员的分数值  如果成员元素不是有序集key的成员，或key不存在，返回一个空指针的错误
+     */
+    @Override
+    public double zScore(String key, Object value) {
+        return redisTemplate.opsForZSet().score(key, value);
+    }
     // ===== ops for zset end =====
 
 }

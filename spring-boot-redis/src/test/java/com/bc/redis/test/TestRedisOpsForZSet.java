@@ -244,4 +244,15 @@ public class TestRedisOpsForZSet {
         long rank = redisDao.zReverseRank(key, value);
         logger.info("value: " + value + ", rank: " + rank);
     }
+
+    /**
+     * 测试zscore
+     */
+    @Test
+    public void testZscore() {
+        String key = "zsetKey";
+        String value = "zsetValue";
+        double score = redisDao.zScore(key, value);
+        logger.info("value: " + value + ", score: " + score);
+    }
 }
