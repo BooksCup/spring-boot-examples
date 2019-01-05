@@ -458,6 +458,16 @@ public interface RedisDao {
      */
     boolean hPut(String key, String hashKey, Object value);
 
+    /**
+     * 同时将多个field-value(字段-值)对设置到哈希表中
+     * 会覆盖哈希表中已存在的字段
+     * 如果哈希表不存在，会创建一个空哈希表，并执行HMSET操作
+     *
+     * @param key       键
+     * @param hValueMap 多个field-value(字段-值)
+     * @return true: 设置成功  false: 设置失败
+     */
+    boolean hPutAll(String key, Map<String, Object> hValueMap);
     // ===== ops for hash end =====
 
 

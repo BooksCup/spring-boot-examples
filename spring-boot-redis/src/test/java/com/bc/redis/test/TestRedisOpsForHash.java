@@ -10,6 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 测试redis操作hash
@@ -27,6 +29,9 @@ public class TestRedisOpsForHash {
     @Resource
     private RedisDao redisDao;
 
+    /**
+     * 测试hset
+     */
     @Test
     public void testHput() {
         String key = "hKey";
@@ -34,5 +39,19 @@ public class TestRedisOpsForHash {
         String value = "hValue";
         boolean result = redisDao.hPut(key, hashKey, value);
         logger.info("hash put result: " + result);
+    }
+
+    /**
+     * 测试hmset
+     */
+    @Test
+    public void testHputAll() {
+        String key = "hKey";
+        Map<String, Object> hValueMap = new HashMap<>();
+        hValueMap.put("hField1", "hValue1");
+        hValueMap.put("hField2", "hValue2");
+        hValueMap.put("hField3", "hValue3");
+        boolean result = redisDao.hPutAll(key, hValueMap);
+        logger.info("hash put all result: " + result);
     }
 }
