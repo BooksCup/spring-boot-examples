@@ -131,6 +131,22 @@ public class TestRedisOpsForZSet {
     }
 
     /**
+     * 测试zunionstore
+     */
+    @Test
+    public void testZunionAndStoreWithManyOtherKeys() {
+        String key = "zsetKey";
+        String otherKey = "zsetKey2";
+        String otherKey2 = "zsetKey3";
+        List<String> otherKeys = new ArrayList<>();
+        otherKeys.add(otherKey);
+        otherKeys.add(otherKey2);
+        String destKey = "zsetKey4";
+        long destZsetSize = redisDao.zUnionAndStore(key, otherKeys, destKey);
+        logger.info("dest zset size: " + destZsetSize);
+    }
+
+    /**
      * 测试zrank
      */
     @Test

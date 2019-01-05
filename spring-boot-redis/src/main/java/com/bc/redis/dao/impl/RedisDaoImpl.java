@@ -1050,7 +1050,7 @@ public class RedisDaoImpl implements RedisDao {
     }
 
     /**
-     * 计算给定的一个或多个有序集的并集，其中给定key的数量必须以numkeys参数指定，并将该并集(结果集)储存到destination
+     * 计算给定的一个有序集的并集，并将该并集(结果集)储存到destination
      * 结果集中某个成员的分数值是所有给定集下该成员分数值之和
      *
      * @param key      第一个键
@@ -1061,6 +1061,20 @@ public class RedisDaoImpl implements RedisDao {
     @Override
     public long zUnionAndStore(String key, String otherKey, String destKey) {
         return redisTemplate.opsForZSet().unionAndStore(key, otherKey, destKey);
+    }
+
+    /**
+     * 计算给定的多个有序集的并集，并将该并集(结果集)储存到destination
+     * 结果集中某个成员的分数值是所有给定集下该成员分数值之和
+     *
+     * @param key       第一个键
+     * @param otherKeys 其他键
+     * @param destKey   destination
+     * @return 保存到目标结果集的的成员数量
+     */
+    @Override
+    public long zUnionAndStore(String key, Collection<String> otherKeys, String destKey) {
+        return redisTemplate.opsForZSet().unionAndStore(key, otherKeys, destKey);
     }
 
     /**
