@@ -628,6 +628,30 @@ public class RedisDaoImpl implements RedisDao {
     }
     // ===== ops for list end =====
 
+    // ===== ops for hash begin =====
+
+    /**
+     * 为哈希表中的字段赋值
+     * 如果哈希表不存在，一个新的哈希表被创建并进行HSET操作
+     * 如果字段已经存在于哈希表中，旧值将被覆盖
+     *
+     * @param key     键
+     * @param hashKey 哈希键
+     * @param value   值
+     * @return true: 赋值成功  false: 赋值失败
+     */
+    @Override
+    public boolean hPut(String key, String hashKey, Object value) {
+        try {
+            redisTemplate.opsForHash().put(key, hashKey, value);
+            return true;
+        } catch (Exception e) {
+            logger.error("hPut error: " + e.getMessage());
+            return false;
+        }
+    }
+
+    // ===== ops for hash end =====
 
     // ===== ops for set begin =====
 
