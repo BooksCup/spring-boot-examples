@@ -770,6 +770,17 @@ public interface RedisDao {
     long zIntersectAndStore(String key, Collection<String> otherKeys, String destKey);
 
     /**
+     * 计算给定的一个或多个有序集的并集，其中给定key的数量必须以numkeys参数指定，并将该并集(结果集)储存到destination
+     * 结果集中某个成员的分数值是所有给定集下该成员分数值之和
+     *
+     * @param key      第一个键
+     * @param otherKey 第二个键
+     * @param destKey  destination
+     * @return 保存到目标结果集的的成员数量
+     */
+    long zUnionAndStore(String key, String otherKey, String destKey);
+
+    /**
      * 返回有序集中指定成员的排名(从0开始)
      * 其中有序集成员按分数值递增(从小到大)顺序排列
      *
