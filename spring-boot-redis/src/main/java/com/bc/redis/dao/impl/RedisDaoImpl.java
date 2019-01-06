@@ -683,6 +683,19 @@ public class RedisDaoImpl implements RedisDao {
         return redisTemplate.opsForHash().get(key, hashKey);
     }
 
+    /**
+     * 返回哈希表中，一个或多个给定字段的值
+     * 如果指定的字段不存在于哈希表，那么返回一个null值
+     *
+     * @param key      键
+     * @param hashKeys 哈希键集合
+     * @return 一个包含多个给定字段关联值的表，表值的排列顺序和指定字段的请求顺序一样
+     */
+    @Override
+    public List<Object> hMultiGet(String key, Collection<Object> hashKeys) {
+        return redisTemplate.opsForHash().multiGet(key, hashKeys);
+    }
+
     // ===== ops for hash end =====
 
     // ===== ops for set begin =====

@@ -477,6 +477,16 @@ public interface RedisDao {
      * @return 返回给定字段的值。如果给定的字段或key不存在时，返回null
      */
     Object hGet(String key, String hashKey);
+
+    /**
+     * 返回哈希表中，一个或多个给定字段的值
+     * 如果指定的字段不存在于哈希表，那么返回一个null值
+     *
+     * @param key      键
+     * @param hashKeys 哈希键集合
+     * @return 一个包含多个给定字段关联值的表，表值的排列顺序和指定字段的请求顺序一样
+     */
+    List<Object> hMultiGet(String key, Collection<Object> hashKeys);
     // ===== ops for hash end =====
 
 

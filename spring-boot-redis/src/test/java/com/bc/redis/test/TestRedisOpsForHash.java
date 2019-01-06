@@ -10,7 +10,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -63,5 +65,20 @@ public class TestRedisOpsForHash {
         String key = "hKey";
         String hashKey = "hField";
         logger.info("key: " + key + ", hashKey: " + hashKey + ", value: " + redisDao.hGet(key, hashKey));
+    }
+
+    /**
+     * 测试hgetall
+     */
+    @Test
+    public void testHgetAll() {
+        String key = "hKey";
+        List<Object> hashKeyList = new ArrayList<>();
+        hashKeyList.add("hField1");
+        hashKeyList.add("hField3");
+        List<Object> valueList = redisDao.hMultiGet(key, hashKeyList);
+        for (Object value : valueList) {
+            logger.info("value: " + value);
+        }
     }
 }
