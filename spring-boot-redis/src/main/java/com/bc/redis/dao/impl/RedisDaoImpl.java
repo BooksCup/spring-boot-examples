@@ -671,6 +671,18 @@ public class RedisDaoImpl implements RedisDao {
         }
     }
 
+    /**
+     * 返回哈希表中指定字段的值
+     *
+     * @param key     键
+     * @param hashKey 哈希键
+     * @return 返回给定字段的值。如果给定的字段或key不存在时，返回null
+     */
+    @Override
+    public Object hGet(String key, String hashKey) {
+        return redisTemplate.opsForHash().get(key, hashKey);
+    }
+
     // ===== ops for hash end =====
 
     // ===== ops for set begin =====

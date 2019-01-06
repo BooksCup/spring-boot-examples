@@ -54,4 +54,14 @@ public class TestRedisOpsForHash {
         boolean result = redisDao.hPutAll(key, hValueMap);
         logger.info("hash put all result: " + result);
     }
+
+    /**
+     * 测试hget
+     */
+    @Test
+    public void testHget() {
+        String key = "hKey";
+        String hashKey = "hField";
+        logger.info("key: " + key + ", hashKey: " + hashKey + ", value: " + redisDao.hGet(key, hashKey));
+    }
 }
