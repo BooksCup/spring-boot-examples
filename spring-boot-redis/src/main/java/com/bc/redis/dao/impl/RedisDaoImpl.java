@@ -696,6 +696,18 @@ public class RedisDaoImpl implements RedisDao {
         return redisTemplate.opsForHash().multiGet(key, hashKeys);
     }
 
+    /**
+     * 删除哈希表key中的一个或多个指定字段，不存在的字段将被忽略
+     *
+     * @param key      键
+     * @param hashKeys 哈希键集合
+     * @return 被成功删除字段的数量，不包括被忽略的字段
+     */
+    @Override
+    public long hDelete(String key, String... hashKeys) {
+        return redisTemplate.opsForHash().delete(key, hashKeys);
+    }
+
     // ===== ops for hash end =====
 
     // ===== ops for set begin =====

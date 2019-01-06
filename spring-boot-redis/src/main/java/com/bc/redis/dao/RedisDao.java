@@ -487,8 +487,16 @@ public interface RedisDao {
      * @return 一个包含多个给定字段关联值的表，表值的排列顺序和指定字段的请求顺序一样
      */
     List<Object> hMultiGet(String key, Collection<Object> hashKeys);
-    // ===== ops for hash end =====
 
+    /**
+     * 删除哈希表key中的一个或多个指定字段，不存在的字段将被忽略
+     *
+     * @param key      键
+     * @param hashKeys 哈希键集合
+     * @return 被成功删除字段的数量，不包括被忽略的字段
+     */
+    long hDelete(String key, String... hashKeys);
+    // ===== ops for hash end =====
 
     // ===== ops for set begin =====
 

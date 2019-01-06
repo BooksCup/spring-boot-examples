@@ -81,4 +81,14 @@ public class TestRedisOpsForHash {
             logger.info("value: " + value);
         }
     }
+
+    /**
+     * 测试hdel
+     */
+    @Test
+    public void testHdelete() {
+        String key = "hKey";
+        long deleteNum = redisDao.hDelete(key, "hField2", "hField4");
+        logger.info("delete num: " + deleteNum);
+    }
 }
