@@ -509,6 +509,14 @@ public interface RedisDao {
      * @return 被成功删除字段的数量，不包括被忽略的字段
      */
     long hDelete(String key, String... hashKeys);
+
+    /**
+     * 返回哈希表所有域(field)的值
+     *
+     * @param key 键
+     * @return 一个包含哈希表中所有域(field)值的列表。当key不存在时，返回一个空表
+     */
+    List<Object> hValues(String key);
     // ===== ops for hash end =====
 
     // ===== ops for set begin =====

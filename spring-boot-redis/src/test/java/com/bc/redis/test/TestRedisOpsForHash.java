@@ -103,4 +103,16 @@ public class TestRedisOpsForHash {
         long deleteNum = redisDao.hDelete(key, "hField2", "hField4");
         logger.info("delete num: " + deleteNum);
     }
+
+    /**
+     * 测试hvals
+     */
+    @Test
+    public void testHvalues() {
+        String key = "hKey";
+        List<Object> valueList = redisDao.hValues(key);
+        for (Object value : valueList) {
+            logger.info("value: " + value);
+        }
+    }
 }

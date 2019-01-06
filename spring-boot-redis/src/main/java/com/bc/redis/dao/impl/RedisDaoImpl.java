@@ -724,6 +724,17 @@ public class RedisDaoImpl implements RedisDao {
         return redisTemplate.opsForHash().delete(key, hashKeys);
     }
 
+    /**
+     * 返回哈希表所有域(field)的值
+     *
+     * @param key 键
+     * @return 一个包含哈希表中所有域(field)值的列表。当key不存在时，返回一个空表
+     */
+    @Override
+    public List<Object> hValues(String key) {
+        return redisTemplate.opsForHash().values(key);
+    }
+
     // ===== ops for hash end =====
 
     // ===== ops for set begin =====
