@@ -459,6 +459,19 @@ public interface RedisDao {
     boolean hPut(String key, String hashKey, Object value);
 
     /**
+     * 为哈希表中不存在的的字段赋值
+     * 如果哈希表不存在，一个新的哈希表被创建并进行HSET操作
+     * 如果字段已经存在于哈希表中，操作无效
+     * 如果key不存在，一个新哈希表被创建并执行HSETNX命令
+     *
+     * @param key     键
+     * @param hashKey 哈希键
+     * @param value   值
+     * @return true: 赋值成功  false: 赋值失败
+     */
+    boolean hPutIfAbsent(String key, String hashKey, Object value);
+
+    /**
      * 同时将多个field-value(字段-值)对设置到哈希表中
      * 会覆盖哈希表中已存在的字段
      * 如果哈希表不存在，会创建一个空哈希表，并执行HMSET操作

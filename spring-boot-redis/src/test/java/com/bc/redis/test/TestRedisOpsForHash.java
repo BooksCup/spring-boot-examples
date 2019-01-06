@@ -44,6 +44,18 @@ public class TestRedisOpsForHash {
     }
 
     /**
+     * 测试hsetnx
+     */
+    @Test
+    public void testHputIfAbsent() {
+        String key = "hKey";
+        String hashKey = "hField";
+        String value = "hValue";
+        boolean result = redisDao.hPutIfAbsent(key, hashKey, value);
+        logger.info("hash put result: " + result);
+    }
+
+    /**
      * 测试hmset
      */
     @Test
