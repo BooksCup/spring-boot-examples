@@ -517,6 +517,14 @@ public interface RedisDao {
      * @return 一个包含哈希表中所有域(field)值的列表。当key不存在时，返回一个空表
      */
     List<Object> hValues(String key);
+
+    /**
+     * 获取哈希表中字段的数量
+     *
+     * @param key 键
+     * @return 哈希表中字段的数量。 当key不存在时，返回0。
+     */
+    long hSize(String key);
     // ===== ops for hash end =====
 
     // ===== ops for set begin =====

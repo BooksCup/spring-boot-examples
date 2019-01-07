@@ -735,6 +735,17 @@ public class RedisDaoImpl implements RedisDao {
         return redisTemplate.opsForHash().values(key);
     }
 
+    /**
+     * 获取哈希表中字段的数量
+     *
+     * @param key 键
+     * @return 哈希表中字段的数量。 当key不存在时，返回0。
+     */
+    @Override
+    public long hSize(String key) {
+        return redisTemplate.opsForHash().size(key);
+    }
+
     // ===== ops for hash end =====
 
     // ===== ops for set begin =====

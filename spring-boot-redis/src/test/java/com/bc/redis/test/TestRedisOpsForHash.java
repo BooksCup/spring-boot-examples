@@ -115,4 +115,14 @@ public class TestRedisOpsForHash {
             logger.info("value: " + value);
         }
     }
+
+    /**
+     * 测试hlen
+     */
+    @Test
+    public void testHlen() {
+        String key = "hKey";
+        long hashLength = redisDao.hSize(key);
+        logger.info("hash length: " + hashLength);
+    }
 }
