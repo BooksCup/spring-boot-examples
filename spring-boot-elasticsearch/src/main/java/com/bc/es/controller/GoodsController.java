@@ -127,8 +127,7 @@ public class GoodsController {
             boolQuery = boolQuery.must(keywordMmqb);
         }
         Pageable pageable = generatePageable(page, pageSize, sortField, sortDirection);
-        Page<Goods> resultPage = goodsService.search(boolQuery, pageable);
-        return resultPage;
+        return goodsService.search(boolQuery, pageable);
     }
 
     /**
@@ -176,8 +175,7 @@ public class GoodsController {
         }
 
         SearchQuery searchQuery = nativeSearchQueryBuilder.build();
-        Page<Goods> resultPage = goodsService.search(searchQuery);
-        return resultPage;
+        return goodsService.search(searchQuery);
     }
 
 
@@ -250,7 +248,8 @@ public class GoodsController {
         nativeSearchQueryBuilder = nativeSearchQueryBuilder.withHighlightFields(highLightFields);
 
         SearchQuery searchQuery = nativeSearchQueryBuilder.build();
-        Page<Goods> resultPage = elasticsearchTemplate.queryForPage(searchQuery, Goods.class, new SearchResultMapper() {
+        return elasticsearchTemplate.queryForPage(searchQuery, Goods.class, new SearchResultMapper() {
+            @SuppressWarnings("unchecked")
             @Override
             public <T> AggregatedPage<T> mapResults(SearchResponse response, Class<T> clazz, Pageable pageable) {
                 SearchHits searchHits = response.getHits();
@@ -267,7 +266,6 @@ public class GoodsController {
                 return new AggregatedPageImpl<>(results, pageable, totalHits, response.getAggregations(), response.getScrollId());
             }
         });
-        return resultPage;
     }
 
     /**

@@ -51,8 +51,7 @@ public class GoodsServiceImpl implements GoodsService {
      */
     @Override
     public Page<Goods> search(QueryBuilder queryBuilder, Pageable pageable) {
-        Page<Goods> resultPage = goodsRepository.search(queryBuilder, pageable);
-        return resultPage;
+        return goodsRepository.search(queryBuilder, pageable);
     }
 
     /**
@@ -63,8 +62,7 @@ public class GoodsServiceImpl implements GoodsService {
      */
     @Override
     public Page<Goods> search(SearchQuery searchQuery) {
-        Page<Goods> resultPage = goodsRepository.search(searchQuery);
-        return resultPage;
+        return goodsRepository.search(searchQuery);
     }
 
     /**

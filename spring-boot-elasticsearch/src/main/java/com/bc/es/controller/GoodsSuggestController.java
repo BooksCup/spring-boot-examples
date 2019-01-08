@@ -45,8 +45,6 @@ public class GoodsSuggestController {
         if (StringUtils.isEmpty(prefix)) {
             return new ArrayList<>();
         }
-        List<String> suggestList = goodsService.suggestSearch("seoKeyWords", prefix, topSize);
-
-        return suggestList;
+        return goodsService.suggestSearch("seoKeyWords", prefix, topSize);
     }
 }
