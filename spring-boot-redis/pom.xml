@@ -10,7 +10,7 @@
     <packaging>jar</packaging>
 
     <name>spring-boot-redis</name>
-    <description>Spring boot上整合redis</description>
+    <description>Spring boot整合redis</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>

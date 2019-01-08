@@ -33,7 +33,7 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("spring-boot-elasticsearch")
-                .description("Springboot操作elasticsearch")
+                .description("Spring boot整合elasticsearch")
                 .version("1.0")
                 .contact(new Contact("BooksCup", "", "BooksCup@163.com"))
                 .build();

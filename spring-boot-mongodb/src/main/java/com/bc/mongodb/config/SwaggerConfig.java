@@ -33,7 +33,7 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("spring-boot-mongodb")
-                .description("Springboot整合mongodb")
+                .description("Spring boot整合mongodb")
                 .version("1.0.0")
                 .contact(new Contact("BooksCup", "", "BooksCup@163.com"))
                 .build();

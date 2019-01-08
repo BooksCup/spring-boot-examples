@@ -10,7 +10,7 @@
     <packaging>jar</packaging>
 
     <name>spring-boot-elasticsearch</name>
-    <description>Spring boot上整合elastic search</description>
+    <description>Spring boot整合elasticsearch</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
