@@ -264,7 +264,8 @@ public class TestRedisOpsForSet {
         String key = "setKey";
         String value = "a";
         String destKey = "setKey4";
-        redisDao.sMove(key, value, destKey);
+        boolean moveResult = redisDao.sMove(key, value, destKey);
+        logger.info("set move result: " + moveResult);
     }
 
     /**

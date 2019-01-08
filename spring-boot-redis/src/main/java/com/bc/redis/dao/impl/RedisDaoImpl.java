@@ -720,7 +720,7 @@ public class RedisDaoImpl implements RedisDao {
      * @return 被成功删除字段的数量，不包括被忽略的字段
      */
     @Override
-    public long hDelete(String key, String... hashKeys) {
+    public long hDelete(String key, Object... hashKeys) {
         return redisTemplate.opsForHash().delete(key, hashKeys);
     }
 
@@ -1126,7 +1126,7 @@ public class RedisDaoImpl implements RedisDao {
      */
     @Override
     public long zAdd(String key, Map<String, Double> valueScoreMap) {
-        Set<ZSetOperations.TypedTuple<Object>> tuples = new HashSet();
+        Set<ZSetOperations.TypedTuple<Object>> tuples = new HashSet<>();
         for (Map.Entry<String, Double> entry : valueScoreMap.entrySet()) {
             ZSetOperations.TypedTuple<Object> tuple = new DefaultTypedTuple<>(entry.getKey(), entry.getValue());
             tuples.add(tuple);

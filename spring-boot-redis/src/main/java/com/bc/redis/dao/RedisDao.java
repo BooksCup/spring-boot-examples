@@ -508,7 +508,7 @@ public interface RedisDao {
      * @param hashKeys 哈希键集合
      * @return 被成功删除字段的数量，不包括被忽略的字段
      */
-    long hDelete(String key, String... hashKeys);
+    long hDelete(String key, Object... hashKeys);
 
     /**
      * 返回哈希表所有域(field)的值
