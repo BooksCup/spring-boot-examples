@@ -221,7 +221,7 @@ public class TestRedisOpsForList {
         String key = "listKey";
         List<Object> valueList = redisDao.lRange(key, 0, -1);
         for (int i = 0; i < valueList.size(); i++) {
-            long index = i;
+            long index = Long.valueOf(i + "");
             logger.info("valueList[" + index + "] = " + redisDao.lIndex(key, index));
         }
     }
