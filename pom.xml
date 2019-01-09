@@ -27,5 +27,6 @@
         <module>spring-boot-redis</module>
         <module>spring-boot-mongodb</module>
         <module>spring-boot-rabbitmq</module>
+        <module>spring-boot-kafka</module>
     </modules>
 </project>
