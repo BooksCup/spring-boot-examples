@@ -1,6 +1,7 @@
 package com.bc.netty.client.rpc;
 
-import com.bc.netty.client.exception.ErrorParamsException;
+
+import com.bc.netty.common.exception.ErrorParamsException;
 
 public interface DemoService {
 

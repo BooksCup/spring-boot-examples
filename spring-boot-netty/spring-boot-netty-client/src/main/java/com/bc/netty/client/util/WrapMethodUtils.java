@@ -1,6 +1,6 @@
 package com.bc.netty.client.util;
 
-import com.bc.netty.client.entity.MethodInvokeMeta;
+import com.bc.netty.common.entity.MethodInvokeMeta;
 
 import java.lang.reflect.Method;
 

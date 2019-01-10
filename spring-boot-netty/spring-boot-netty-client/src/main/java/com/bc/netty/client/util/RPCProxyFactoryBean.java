@@ -1,7 +1,7 @@
 package com.bc.netty.client.util;
 
-import com.bc.netty.client.entity.MethodInvokeMeta;
-import com.bc.netty.client.exception.ErrorParamsException;
+import com.bc.netty.common.entity.MethodInvokeMeta;
+import com.bc.netty.common.exception.ErrorParamsException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.AbstractFactoryBean;

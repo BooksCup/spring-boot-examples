@@ -10,11 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class NettyClient {
-    /**
-     * NettyClient 志控制器
-     * Create by 叶云轩 at 2018/3/3 下午2:08
-     * Concat at tdg_yyx@foxmail.com
-     */
     private static final Logger LOGGER = LoggerFactory.getLogger(NettyClient.class);
     private static int retry = 0;
     /**

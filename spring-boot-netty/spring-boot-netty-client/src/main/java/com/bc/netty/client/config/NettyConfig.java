@@ -6,10 +6,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * netty客户端配置
- * <p>
  *
- * @author 叶云轩 at tdg_yyx@foxmail.com
- * @date 2018/11/1-17:13
+ * @author zhou
  */
 @Component
 @ConfigurationProperties(prefix = "netty")

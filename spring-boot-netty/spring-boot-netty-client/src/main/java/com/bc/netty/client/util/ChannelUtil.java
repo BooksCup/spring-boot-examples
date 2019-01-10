@@ -1,7 +1,7 @@
 package com.bc.netty.client.util;
 
-import com.bc.netty.client.entity.MethodInvokeMeta;
-import com.bc.netty.client.exception.NoUseableChannel;
+import com.bc.netty.common.entity.MethodInvokeMeta;
+import com.bc.netty.common.exception.NoUseableChannel;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelId;

@@ -2,7 +2,7 @@ package com.bc.netty.client.handler;
 
 
 import com.bc.netty.client.adapter.NettyClientHandlerAdapter;
-import com.bc.netty.client.util.ObjectCodec;
+import com.bc.netty.common.utils.ObjectCodec;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
