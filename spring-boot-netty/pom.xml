@@ -28,5 +28,6 @@
     <modules>
         <module>spring-boot-netty-server</module>
         <module>spring-boot-netty-client</module>
+        <module>spring-boot-netty-common</module>
     </modules>
 </project>
