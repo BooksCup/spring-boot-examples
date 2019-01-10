@@ -14,6 +14,10 @@ import javax.annotation.Resource;
  */
 @SpringBootApplication
 public class NettyServerApplication implements CommandLineRunner {
+
+    /**
+     * 服务端监听
+     */
     @Resource
     private NettyServerListener nettyServerListener;
 

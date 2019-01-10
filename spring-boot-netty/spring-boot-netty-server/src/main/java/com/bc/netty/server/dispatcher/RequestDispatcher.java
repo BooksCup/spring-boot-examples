@@ -1,9 +1,9 @@
 package com.bc.netty.server.dispatcher;
 
+import com.bc.netty.common.entity.MethodInvokeMeta;
+import com.bc.netty.common.entity.NullWritable;
+import com.bc.netty.common.exception.ErrorParamsException;
 import com.bc.netty.server.adapter.ServerChannelHandlerAdapter;
-import com.bc.netty.server.entity.MethodInvokeMeta;
-import com.bc.netty.server.entity.NullWritable;
-import com.bc.netty.server.exception.ErrorParamsException;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;

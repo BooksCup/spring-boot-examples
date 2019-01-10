@@ -1,6 +1,6 @@
 package com.bc.netty.server.service.impl;
 
-import com.bc.netty.server.exception.ErrorParamsException;
+import com.bc.netty.common.exception.ErrorParamsException;
 import com.bc.netty.server.service.DemoService;
 
 public class DemoServiceImpl implements DemoService {

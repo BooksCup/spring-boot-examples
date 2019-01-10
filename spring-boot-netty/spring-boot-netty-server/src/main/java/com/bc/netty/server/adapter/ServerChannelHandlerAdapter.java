@@ -1,7 +1,7 @@
 package com.bc.netty.server.adapter;
 
+import com.bc.netty.common.entity.MethodInvokeMeta;
 import com.bc.netty.server.dispatcher.RequestDispatcher;
-import com.bc.netty.server.entity.MethodInvokeMeta;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;

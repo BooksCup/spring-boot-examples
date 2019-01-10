@@ -1,8 +1,8 @@
 package com.bc.netty.server.listener;
 
+import com.bc.netty.common.utils.ObjectCodec;
 import com.bc.netty.server.adapter.ServerChannelHandlerAdapter;
 import com.bc.netty.server.config.NettyServerConfig;
-import com.bc.netty.server.util.ObjectCodec;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -56,7 +56,7 @@ public class NettyServerListener {
     private ServerChannelHandlerAdapter channelHandlerAdapter;
 
     /**
-     * NETT服务器配置类
+     * netty服务器配置类
      */
     @Resource
     private NettyServerConfig nettyConfig;
@@ -67,7 +67,7 @@ public class NettyServerListener {
     @PreDestroy
     public void close() {
         logger.info("关闭服务器....");
-        //优雅退出
+        // 优雅退出
         boss.shutdownGracefully();
         worker.shutdownGracefully();
     }
@@ -76,7 +76,7 @@ public class NettyServerListener {
      * 开启及服务线程
      */
     public void start() {
-        // 从配置文件中(application.yml)获取服务端监听端口号
+        // 从配置文件中(application.properties)获取服务端监听端口号
         int port = nettyConfig.getPort();
         serverBootstrap.group(boss, worker)
                 .channel(NioServerSocketChannel.class)
@@ -90,7 +90,7 @@ public class NettyServerListener {
                     ChannelPipeline pipeline = ch.pipeline();
                     // 添加心跳支持
                     pipeline.addLast(new IdleStateHandler(5, 0, 0, TimeUnit.SECONDS));
-//                    // 基于定长的方式解决粘包/拆包问题
+                    // 基于定长的方式解决粘包/拆包问题
                     pipeline.addLast(new LengthFieldBasedFrameDecoder(nettyConfig.getMaxFrameLength()
                             , 0, 2, 0, 2));
                     pipeline.addLast(new LengthFieldPrepender(2));
