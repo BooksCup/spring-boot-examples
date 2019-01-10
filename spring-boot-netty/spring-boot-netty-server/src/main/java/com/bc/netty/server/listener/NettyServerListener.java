@@ -1,5 +1,6 @@
 package com.bc.netty.server.listener;
 
+import com.bc.netty.common.cons.Constant;
 import com.bc.netty.common.utils.ObjectCodec;
 import com.bc.netty.server.adapter.ServerChannelHandlerAdapter;
 import com.bc.netty.server.config.NettyServerConfig;
@@ -77,7 +78,8 @@ public class NettyServerListener {
      */
     public void start() {
         // 从配置文件中(application.properties)获取服务端监听端口号
-        int port = nettyConfig.getPort();
+        // 默认端口: Constant.NETTY_SERVER_DEFAULT_PORT
+        int port = nettyConfig.getPort() == 0 ? Constant.NETTY_SERVER_DEFAULT_PORT : nettyConfig.getPort();
         serverBootstrap.group(boss, worker)
                 .channel(NioServerSocketChannel.class)
                 .option(ChannelOption.SO_BACKLOG, 100)
