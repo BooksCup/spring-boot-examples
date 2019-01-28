@@ -4,7 +4,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
-
+/**
+ * Netty服务端启动类
+ *
+ * @author zhou
+ */
 @SpringBootApplication
 @ComponentScan({"com.bc.netty.server"})
 public class NettyServerApplication {

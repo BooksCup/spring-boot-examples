@@ -15,6 +15,10 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
+/**
+ * Netty 服务端
+ * @author zhou
+ */
 @Service("nettyServer")
 @Slf4j
 public class NettyServer {
@@ -36,14 +40,14 @@ public class NettyServer {
     @Value("${server.netty.max_payload_size}")
     private Integer maxPayloadSize;
 
-    private  ChannelFuture channelFuture;
-    private  EventLoopGroup bossGroup;
-    private  EventLoopGroup workerGroup;
+    private ChannelFuture channelFuture;
+    private EventLoopGroup bossGroup;
+    private EventLoopGroup workerGroup;
 
 
     @PostConstruct
     public void init() throws Exception {
-        log.info("Setting resource leak detector level to {}",leakDetectorLevel);
+        log.info("Setting resource leak detector level to {}", leakDetectorLevel);
         ResourceLeakDetector.setLevel(ResourceLeakDetector.Level.valueOf(leakDetectorLevel.toUpperCase()));
 
         log.info("Starting Server");
@@ -64,7 +68,7 @@ public class NettyServer {
         // 绑定端口，并同步等待成功，即启动服务端
         channelFuture = b.bind(port).sync();
 
-        log.info("Server started!");
+        log.info("Server Started!");
 
     }
 
@@ -79,7 +83,7 @@ public class NettyServer {
             workerGroup.shutdownGracefully();
             bossGroup.shutdownGracefully();
         }
-        log.info("server stopped!");
+        log.info("Server Stopped!");
 
     }
 }

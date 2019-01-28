@@ -13,11 +13,15 @@ import io.netty.handler.timeout.IdleStateHandler;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Netty服务端初始化
+ *
+ * @author zhou
+ */
 public class NettyServerInitializer extends ChannelInitializer<SocketChannel> {
 
-
     @Override
-    protected void initChannel(SocketChannel ch) throws Exception {
+    protected void initChannel(SocketChannel ch) {
         ChannelPipeline ph = ch.pipeline();
 
         //入参说明: 读超时时间、写超时时间、所有类型的超时时间、时间格式

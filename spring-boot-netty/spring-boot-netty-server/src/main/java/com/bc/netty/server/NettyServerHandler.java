@@ -10,6 +10,11 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * Netty服务端处理类
+ *
+ * @author zhou
+ */
 @Slf4j
 public class NettyServerHandler extends ChannelInboundHandlerAdapter {
     /**
@@ -28,7 +33,8 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         log.info("连接的客户端地址:" + ctx.channel().remoteAddress());
-        UserMsg.User user = UserMsg.User.newBuilder().setId(1).setAge(24).setName("穆书伟").setState(0).build();
+        UserMsg.User user = UserMsg.User.newBuilder().setId(1).
+                setAge(24).setName("张三").setState(0).build();
         ctx.writeAndFlush(user);
         super.channelActive(ctx);
     }
