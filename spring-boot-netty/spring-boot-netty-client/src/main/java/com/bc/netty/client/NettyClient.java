@@ -1,4 +1,5 @@
 package com.bc.netty.client;
+
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelOption;
@@ -14,10 +15,14 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Netty客户端
+ *
+ * @author zhou
+ */
 @Service("nettyClient")
 @Slf4j
 public class NettyClient {
-
 
     @Value("${server.bind_address}")
     private String host;
@@ -25,13 +30,13 @@ public class NettyClient {
     @Value("${server.bind_port}")
     private Integer port;
 
-    /**唯一标记 */
-    private boolean initFalg=true;
+    /**
+     * 唯一标记
+     */
+    private boolean initFalg = true;
 
     private EventLoopGroup group;
     private ChannelFuture f;
-
-
 
     /**
      * Netty创建全部都是实现自AbstractBootstrap。 客户端的是Bootstrap，服务端的则是 ServerBootstrap。
@@ -52,6 +57,7 @@ public class NettyClient {
         }
         log.info("客户端已停止!");
     }
+
     /**
      * 重连
      */
@@ -70,13 +76,13 @@ public class NettyClient {
                         eventLoop.schedule(() -> doConnect(new Bootstrap(), eventLoop), 10, TimeUnit.SECONDS);
                     }
                 });
-                if(initFalg){
+                if (initFalg) {
                     log.info("Netty客户端启动成功!");
-                    initFalg=false;
+                    initFalg = false;
                 }
             }
         } catch (Exception e) {
-            log.info("客户端连接失败!"+e.getMessage());
+            log.info("客户端连接失败!" + e.getMessage());
         }
 
     }

@@ -12,11 +12,15 @@ import io.netty.handler.timeout.IdleStateHandler;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Netty客户端初始化类
+ *
+ * @author zhou
+ */
 public class NettyClientInitializer extends ChannelInitializer<SocketChannel> {
 
-
     @Override
-    protected void initChannel(SocketChannel ch) throws Exception {
+    protected void initChannel(SocketChannel ch) {
         ChannelPipeline ph = ch.pipeline();
         /*
          * 解码和编码，应和服务端一致
@@ -31,7 +35,7 @@ public class NettyClientInitializer extends ChannelInitializer<SocketChannel> {
         ph.addLast(new ProtobufEncoder());
 
         //业务逻辑实现类
-        ph.addLast("nettyClientHandler",new NettyClientHandler());
+        ph.addLast("nettyClientHandler", new NettyClientHandler());
 
     }
 

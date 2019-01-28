@@ -15,14 +15,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 
-
+/**
+ * Netty客户端处理类
+ *
+ * @author zhou
+ */
 @ChannelHandler.Sharable
 @Slf4j
 public class NettyClientHandler extends ChannelInboundHandlerAdapter {
     @Autowired
     private NettyClient nettyClient;
 
-    /** 循环次数 */
+    /**
+     * 循环次数
+     */
     private AtomicInteger fcount = new AtomicInteger(1);
 
     /**
@@ -47,7 +53,6 @@ public class NettyClientHandler extends ChannelInboundHandlerAdapter {
 
     /**
      * 心跳请求处理 每4秒发送一次心跳请求;
-     *
      */
     @Override
     public void userEventTriggered(ChannelHandlerContext ctx, Object obj) throws Exception {
