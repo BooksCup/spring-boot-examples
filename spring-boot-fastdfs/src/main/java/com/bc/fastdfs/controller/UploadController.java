@@ -67,7 +67,8 @@ public class UploadController {
         inputStream.close();
         FastdfsFile file = new FastdfsFile(fileName, file_buff, ext);
         try {
-            fileAbsolutePath = FastdfsClient.upload(file);  //upload to fastdfs
+            //upload to fastdfs
+            fileAbsolutePath = FastdfsClient.upload(file);
         } catch (Exception e) {
             logger.error("upload file Exception!", e);
         }

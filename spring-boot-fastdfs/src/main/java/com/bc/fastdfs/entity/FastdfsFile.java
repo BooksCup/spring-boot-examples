@@ -1,5 +1,10 @@
 package com.bc.fastdfs.entity;
 
+/**
+ * 文件
+ *
+ * @author zhou
+ */
 public class FastdfsFile {
     private String name;
 
