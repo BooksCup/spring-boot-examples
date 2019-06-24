@@ -3,6 +3,14 @@ package com.bc.es.entity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 
+/**
+ * 商品实体
+ * 对应es中的商品文档
+ * index: goods
+ * type: goods
+ *
+ * @author zhou
+ */
 @Document(indexName = "goods", type = "goods", shards = 1, replicas = 0, refreshInterval = "-1")
 public class Goods {
     @Id

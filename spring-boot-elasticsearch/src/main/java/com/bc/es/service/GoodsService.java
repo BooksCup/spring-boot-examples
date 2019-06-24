@@ -7,8 +7,26 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
+/**
+ * 商品业务类接口
+ *
+ * @author zhou
+ */
 public interface GoodsService {
+
+    /**
+     * 保存商品文档
+     *
+     * @param goods 商品
+     */
     void save(Goods goods);
 
+    /**
+     * 搜索商品
+     *
+     * @param queryBuilder 请求参数
+     * @param pageable     分页参数
+     * @return 搜索结果
+     */
     Page<Goods> search(QueryBuilder queryBuilder, Pageable pageable);
 }
