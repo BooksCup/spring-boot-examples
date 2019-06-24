@@ -3,6 +3,8 @@ package com.bc.es.entity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 
+import java.math.BigDecimal;
+
 /**
  * 商品实体
  * 对应es中的商品文档
@@ -36,14 +38,26 @@ public class Goods {
      */
     private String seoDescription;
 
+    /**
+     * 单价
+     */
+    private BigDecimal price;
+
+    /**
+     * 销量
+     */
+    private Long salesVolume;
+
     public Goods() {
 
     }
 
-    public Goods(String name, String seoKeyWords, String seoDescription) {
+    public Goods(String name, String seoKeyWords, String seoDescription, BigDecimal price, Long salesVolume) {
         this.name = name;
         this.seoKeyWords = seoKeyWords;
         this.seoDescription = seoDescription;
+        this.price = price;
+        this.salesVolume = salesVolume;
     }
 
     public String getId() {
@@ -84,5 +98,21 @@ public class Goods {
 
     public void setSeoDescription(String seoDescription) {
         this.seoDescription = seoDescription;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public Long getSalesVolume() {
+        return salesVolume;
+    }
+
+    public void setSalesVolume(Long salesVolume) {
+        this.salesVolume = salesVolume;
     }
 }
