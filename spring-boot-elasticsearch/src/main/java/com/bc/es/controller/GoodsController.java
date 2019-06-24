@@ -1,5 +1,6 @@
 package com.bc.es.controller;
 
+import com.bc.es.cons.Constants;
 import com.bc.es.entity.Goods;
 import com.bc.es.enums.ResponseMsg;
 import com.bc.es.service.GoodsService;
@@ -12,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
@@ -81,16 +83,20 @@ public class GoodsController {
     /**
      * 搜索商品
      *
-     * @param searchKey 搜索关键字
-     * @param page      页数(默认第1页)
-     * @param pageSize  分页大小(默认单页10条)
+     * @param searchKey     搜索关键字
+     * @param page          页数(默认第1页)
+     * @param pageSize      分页大小(默认单页10条)
+     * @param sortField     排序字段
+     * @param sortDirection ASC: "升序"  DESC:"降序"
      * @return 搜索结果
      */
     @ApiOperation(value = "搜索商品", notes = "搜索商品")
     @GetMapping(value = "")
     public Page<Goods> search(@RequestParam String searchKey,
                               @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
-                              @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize) {
+                              @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize,
+                              @RequestParam(value = "sortField", required = false) String sortField,
+                              @RequestParam(value = "sortDirection", required = false) String sortDirection) {
         BoolQueryBuilder boolQuery = QueryBuilders.boolQuery();
 
         if (!StringUtils.isEmpty(searchKey)) {
@@ -101,8 +107,23 @@ public class GoodsController {
             boolQuery = boolQuery.must(keywordMmqb);
         }
         page = page < 1 ? 0 : page - 1;
-        Pageable pageable = PageRequest.of(page, pageSize);
+        Pageable pageable;
+        if (!StringUtils.isEmpty(sortField)) {
+            // 需要排序
+            Sort.Direction direction;
+            if (Constants.SORT_DIRECTION_ASC.equalsIgnoreCase(sortDirection)) {
+                direction = Sort.Direction.ASC;
+            } else {
+                direction = Sort.Direction.DESC;
+            }
+            Sort sort = new Sort(direction, sortField);
+            pageable = PageRequest.of(page, pageSize, sort);
+        } else {
+            pageable = PageRequest.of(page, pageSize);
+        }
+
         Page<Goods> resultPage = goodsService.search(boolQuery, pageable);
         return resultPage;
     }
+
 }
