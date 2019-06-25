@@ -82,6 +82,8 @@ public class GoodsController {
 
     /**
      * 搜索商品
+     * 版本号: v1
+     * 直接通过Query查询
      *
      * @param searchKey     搜索关键字
      * @param page          页数(默认第1页)
@@ -91,7 +93,7 @@ public class GoodsController {
      * @return 搜索结果
      */
     @ApiOperation(value = "搜索商品", notes = "搜索商品")
-    @GetMapping(value = "")
+    @GetMapping(value = "/v1")
     public Page<Goods> search(@RequestParam String searchKey,
                               @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
                               @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize,
@@ -121,9 +123,25 @@ public class GoodsController {
         } else {
             pageable = PageRequest.of(page, pageSize);
         }
-
         Page<Goods> resultPage = goodsService.search(boolQuery, pageable);
         return resultPage;
     }
 
+    /**
+     * 删除商品
+     *
+     * @param goodsId 商品id
+     * @return ResponseEntity
+     */
+    @ApiOperation(value = "删除商品", notes = "删除商品")
+    @DeleteMapping(value = "/{goodsId}")
+    public ResponseEntity<String> deleteGoodsById(@PathVariable String goodsId) {
+        try {
+            goodsService.deleteById(goodsId);
+            return new ResponseEntity<>(ResponseMsg.DOCUMENT_DELETE_GOODS_SUCCESS.value(), HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return new ResponseEntity<>(ResponseMsg.DOCUMENT_DELETE_GOODS_ERROR.value(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

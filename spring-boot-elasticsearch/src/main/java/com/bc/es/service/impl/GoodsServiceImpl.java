@@ -43,4 +43,14 @@ public class GoodsServiceImpl implements GoodsService {
         return resultPage;
     }
 
+    /**
+     * 根据id删除商品文档
+     *
+     * @param goodsId 商品id
+     */
+    @Override
+    public void deleteById(String goodsId) {
+        goodsRepository.deleteById(goodsId);
+    }
+
 }

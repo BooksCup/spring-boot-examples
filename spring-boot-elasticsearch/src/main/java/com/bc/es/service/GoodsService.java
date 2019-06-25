@@ -29,4 +29,11 @@ public interface GoodsService {
      * @return 搜索结果
      */
     Page<Goods> search(QueryBuilder queryBuilder, Pageable pageable);
+
+    /**
+     * 根据id删除商品文档
+     *
+     * @param goodsId 商品id
+     */
+    void deleteById(String goodsId);
 }
