@@ -7,6 +7,7 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.stereotype.Service;
 
 /**
@@ -40,6 +41,18 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public Page<Goods> search(QueryBuilder queryBuilder, Pageable pageable) {
         Page<Goods> resultPage = goodsRepository.search(queryBuilder, pageable);
+        return resultPage;
+    }
+
+    /**
+     * 搜索商品
+     *
+     * @param searchQuery 查询参数
+     * @return 搜索结果
+     */
+    @Override
+    public Page<Goods> search(SearchQuery searchQuery) {
+        Page<Goods> resultPage = goodsRepository.search(searchQuery);
         return resultPage;
     }
 

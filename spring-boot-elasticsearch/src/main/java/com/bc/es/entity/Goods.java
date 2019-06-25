@@ -24,6 +24,15 @@ public class Goods {
     private String name;
 
     /**
+     * 商品类别
+     * 这里只是做个简化
+     * 实际的商城项目这个类别管理很复杂,
+     * 会分多层级、推荐(多终端)、佣金、保证金、行业多维度评分、各种图标、广告、品牌etc,
+     * 大型商城针对于类别甚至会出单独的服务
+     */
+    private String category;
+
+    /**
      * 库存数量
      */
     private int inventory;
@@ -60,6 +69,16 @@ public class Goods {
         this.salesVolume = salesVolume;
     }
 
+    public Goods(String name, String category, String seoKeyWords,
+                 String seoDescription, BigDecimal price, Long salesVolume) {
+        this.name = name;
+        this.category = category;
+        this.seoKeyWords = seoKeyWords;
+        this.seoDescription = seoDescription;
+        this.price = price;
+        this.salesVolume = salesVolume;
+    }
+
     public String getId() {
         return id;
     }
@@ -74,6 +93,14 @@ public class Goods {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public int getInventory() {
