@@ -4,12 +4,14 @@ import com.bc.es.service.GoodsService;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,8 +40,11 @@ public class GoodsSuggestController {
     @ApiOperation(value = "商品搜索词补齐", notes = "商品搜索词补齐")
     @GetMapping(value = "")
     public List<String> suggest(@RequestParam(required = false) String prefix,
-                                @RequestParam(required = false) Integer topSize) {
+                                @RequestParam(value = "topSize", required = false, defaultValue = "5") Integer topSize) {
         logger.info("suggest: " + prefix);
+        if (StringUtils.isEmpty(prefix)) {
+            return new ArrayList<>();
+        }
         List<String> suggestList = goodsService.suggestSearch("seoKeyWords", prefix, topSize);
 
         return suggestList;
