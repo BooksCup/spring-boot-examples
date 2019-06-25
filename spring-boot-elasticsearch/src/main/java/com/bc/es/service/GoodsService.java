@@ -45,4 +45,14 @@ public interface GoodsService {
      * @param goodsId 商品id
      */
     void deleteById(String goodsId);
+
+    /**
+     * 补齐搜索
+     *
+     * @param field  补齐域
+     * @param prefix 搜索前缀
+     * @param size   搜索结果数量
+     * @return 搜索结果列表
+     */
+    List<String> suggestSearch(String field, String prefix, Integer size);
 }
