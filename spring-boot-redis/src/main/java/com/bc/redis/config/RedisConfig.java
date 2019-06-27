@@ -17,6 +17,9 @@ import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.connection.RedisPassword;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
+import org.springframework.data.redis.connection.jedis.JedisClientConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
@@ -24,6 +27,8 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
+
+import java.time.Duration;
 
 
 /**
@@ -149,11 +154,16 @@ public class RedisConfig extends CachingConfigurerSupport {
         @Bean
         JedisConnectionFactory jedisConnectionFactory() {
             logger.info("Create JedisConnectionFactory successful");
-            JedisConnectionFactory factory = new JedisConnectionFactory();
-            factory.setHostName(host);
-            factory.setPort(port);
-            factory.setTimeout(timeout);
-            factory.setPassword(password);
+            RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
+            redisStandaloneConfiguration.setHostName(host);
+            redisStandaloneConfiguration.setPort(port);
+            redisStandaloneConfiguration.setPassword(RedisPassword.of(password));
+
+            JedisClientConfiguration.JedisClientConfigurationBuilder jedisClientConfiguration =
+                    JedisClientConfiguration.builder();
+            jedisClientConfiguration.connectTimeout(Duration.ofMillis(timeout));
+            JedisConnectionFactory factory = new JedisConnectionFactory(redisStandaloneConfiguration,
+                    jedisClientConfiguration.build());
             return factory;
         }
 
