@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -342,4 +344,67 @@ public class RedisDaoImpl implements RedisDao {
         return redisTemplate.opsForValue().decrement(key, delta);
     }
     // ===== ops for string end =====
+
+
+    // ===== ops for list begin =====
+
+    /**
+     * 将值插入到列表的尾部(最右边)
+     * 如果列表不存在，一个空列表会被创建并执行RPUSH操作
+     * 当列表存在但不是列表类型时，返回一个错误
+     * 会报下面这个错误:
+     * redis.clients.jedis.exceptions.JedisDataException:
+     * WRONGTYPE Operation against a key holding the wrong kind of value
+     *
+     * @param key   键
+     * @param value 值
+     * @return 执行RPUSH操作后，列表的长度
+     */
+    @Override
+    public long lRightPush(String key, Object value) {
+        return redisTemplate.opsForList().rightPush(key, value);
+    }
+
+    /**
+     * 将值插入到列表中第一次出现支点(pivot)的右侧
+     * 举个例子: list.value为 ["value1", "value2", "value3", "value4", "value2"]
+     * 调用lRightPush(key, "value2", "newValue")后
+     * list.value会变成 ["value1", "value2", "newValue", "value3", "value4", "value2"]
+     *
+     * @param key   键
+     * @param pivot 支点
+     * @param value 值
+     * @return 执行RPUSH操作后，列表的长度
+     */
+    @Override
+    public long lRightPush(String key, Object pivot, Object value) {
+        return redisTemplate.opsForList().rightPush(key, pivot, value);
+    }
+
+    /**
+     * 批量rpush
+     * 将多个值插入到列表的尾部(最右边)
+     *
+     * @param key    键
+     * @param values 多个值
+     * @return 执行RPUSH操作后，列表的长度
+     */
+    @Override
+    public long lRightPushAll(String key, Object... values) {
+        return redisTemplate.opsForList().rightPushAll(key, values);
+    }
+
+    /**
+     * 将一个值插入到已存在的列表尾部(最右边)
+     * 如果列表不存在，操作无效。
+     *
+     * @param key   键
+     * @param value 值
+     * @return 执行rpushx操作后，列表的长度。如果key对应的列表不存在，返回0
+     */
+    @Override
+    public long lRightPushIfPresent(String key, Object value) {
+        return redisTemplate.opsForList().rightPushIfPresent(key, value);
+    }
+    // ===== ops for list end =====
 }
