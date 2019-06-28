@@ -28,6 +28,7 @@ public class TestRedisOpsForString {
      * logger
      */
     private static final Logger logger = LoggerFactory.getLogger(TestRedisOpsForString.class);
+
     @Resource
     private RedisDao redisDao;
 

@@ -10,6 +10,96 @@ import java.util.concurrent.TimeUnit;
  * @author zhou
  */
 public interface RedisDao {
+
+    // ===== common ops begin =====
+
+    /**
+     * 设置key的过期时间，key过期后将不再可用
+     *
+     * @param key     键
+     * @param timeout 过期时间
+     * @param unit    时间颗粒度转换单元
+     * @return true: 设置成功  false: 设置失败
+     */
+    boolean expire(String key, long timeout, TimeUnit unit);
+
+    /**
+     * 根据key获取过期时间
+     *
+     * @param key 键
+     * @return 过期时间(默认秒) 返回-1代表永久有效
+     */
+    long getExpire(String key);
+
+    /**
+     * 判断key是否存在
+     *
+     * @param key 键
+     * @return true: 存在  false: 不存在
+     */
+    boolean hasKey(String key);
+
+    /**
+     * 删除已存在的键，不存在的key会被忽略
+     *
+     * @param key key
+     * @return true: 删除成功  false: 删除失败
+     */
+    boolean delete(String key);
+
+    /**
+     * 批量删除key
+     *
+     * @param keyList 键列表
+     * @return 被删除key的数量
+     */
+    long delete(List<String> keyList);
+
+    /**
+     * 从当前数据库中随机返回一个key
+     *
+     * @return 当数据库不为空时，返回一个key。当数据库为空时，返回null
+     */
+    String randomKey();
+
+    /**
+     * 修改key名称
+     * 当oldKey不存在时，会返回错误
+     * 当newKey已经存在时，rename将覆盖旧值
+     *
+     * @param oldKey 旧key
+     * @param newKey 新key
+     * @return true: 修改成功  false: 修改失败
+     */
+    boolean rename(String oldKey, String newKey);
+
+    /**
+     * newKey不存在时修改key的名称
+     * 当newKey已经存在时，将会返回一个错误
+     *
+     * @param oldKey 旧key
+     * @param newKey 新key
+     * @return true: 修改成功   false: 修改失败
+     */
+    boolean renameIfAbsent(String oldKey, String newKey);
+
+    /**
+     * 返回key所储存的值的类型
+     *
+     * @param key 键
+     * @return key的数据类型
+     * 数据类型有： none (key不存在)
+     * string (字符串)
+     * list (列表)
+     * set (集合)
+     * zset (有序集)
+     * hash (哈希表)
+     */
+    String type(String key);
+    // ===== common ops end =====
+
+    // ===== ops for string begin =====
+
     /**
      * 设置值
      *
@@ -133,4 +223,5 @@ public interface RedisDao {
      * @return 执行decr命令之后key的值
      */
     long decrement(String key, long delta);
+    // ===== ops for string end =====
 }

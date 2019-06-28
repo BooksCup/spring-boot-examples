@@ -26,6 +26,128 @@ public class RedisDaoImpl implements RedisDao {
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
+    // ===== common ops begin =====
+
+    /**
+     * 设置key的过期时间，key过期后将不再可用
+     *
+     * @param key     键
+     * @param timeout 过期时间
+     * @param unit    时间颗粒度转换单元
+     * @return true: 设置成功  false: 设置失败
+     */
+    @Override
+    public boolean expire(String key, long timeout, TimeUnit unit) {
+        return redisTemplate.expire(key, timeout, unit);
+    }
+
+    /**
+     * 根据key获取过期时间
+     *
+     * @param key 键
+     * @return 过期时间(默认秒) 返回-1代表永久有效
+     */
+    @Override
+    public long getExpire(String key) {
+        return redisTemplate.getExpire(key);
+    }
+
+    /**
+     * 判断key是否存在
+     *
+     * @param key 键
+     * @return true: 存在  false: 不存在
+     */
+    @Override
+    public boolean hasKey(String key) {
+        return redisTemplate.hasKey(key);
+    }
+
+    /**
+     * 删除已存在的key
+     * 删除不存在的key会返回false
+     *
+     * @param key key
+     * @return true: 删除成功  false: 删除失败
+     */
+    @Override
+    public boolean delete(String key) {
+        return key == null ? false : redisTemplate.delete(key);
+    }
+
+    /**
+     * 批量删除key
+     *
+     * @param keyList 键列表
+     * @return 被删除key的数量
+     */
+    @Override
+    public long delete(List<String> keyList) {
+        return redisTemplate.delete(keyList);
+    }
+
+    /**
+     * 从当前数据库中随机返回一个key
+     *
+     * @return 当数据库不为空时，返回一个key。当数据库为空时，返回null
+     */
+    @Override
+    public String randomKey() {
+        return redisTemplate.randomKey();
+    }
+
+    /**
+     * 修改key名称
+     * 当oldKey不存在时，会返回错误
+     * 当newKey已经存在时，rename将覆盖旧值
+     *
+     * @param oldKey 旧key
+     * @param newKey 新key
+     * @return true: 修改成功  false: 修改失败
+     */
+    @Override
+    public boolean rename(String oldKey, String newKey) {
+        try {
+            redisTemplate.rename(oldKey, newKey);
+            return true;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * newKey不存在时修改key的名称
+     * 当newKey已经存在时，将会返回一个错误
+     *
+     * @param oldKey 旧key
+     * @param newKey 新key
+     * @return true: 修改成功   false: 修改失败
+     */
+    @Override
+    public boolean renameIfAbsent(String oldKey, String newKey) {
+        return redisTemplate.renameIfAbsent(oldKey, newKey);
+    }
+
+    /**
+     * 返回key所储存的值的类型
+     *
+     * @param key 键
+     * @return key的数据类型
+     * 数据类型有： none (key不存在)
+     * string (字符串)
+     * list (列表)
+     * set (集合)
+     * zset (有序集)
+     * hash (哈希表)
+     */
+    @Override
+    public String type(String key) {
+        return redisTemplate.type(key).code();
+    }
+    // ===== common ops end =====
+
+
     // ===== ops for string begin =====
 
     /**
