@@ -291,5 +291,26 @@ public interface RedisDao {
      * @return 假如在指定时间内没有任何元素被弹出，则返回null。反之，返回列表的最后一个元素
      */
     Object lRightPop(String key, long timeout, TimeUnit unit);
+
+    /**
+     * 移除列表的最后一个元素，并将该元素添加到另一个列表并返回。
+     *
+     * @param sourceKey      源key
+     * @param destinationKey 目标key
+     * @return 被弹出的元素
+     */
+    Object lRightPopAndLeftPush(String sourceKey, String destinationKey);
+
+    /**
+     * 从列表中取出最后一个元素，并插入到另外一个列表的头部； 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止
+     *
+     * @param sourceKey      源key
+     * @param destinationKey 目标key
+     * @param timeout        超时时间
+     * @param unit           时间颗粒度转换单元
+     * @return 假如在指定时间内没有任何元素被弹出，则返回null。反之，返回列表的最后一个元素
+     */
+    Object lRightPopAndLeftPush(String sourceKey, String destinationKey,
+                                       long timeout, TimeUnit unit);
     // ===== ops for list end =====
 }

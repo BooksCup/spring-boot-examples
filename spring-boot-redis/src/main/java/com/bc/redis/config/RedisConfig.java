@@ -88,7 +88,7 @@ public class RedisConfig extends CachingConfigurerSupport {
         om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
         jackson2JsonRedisSerializer.setObjectMapper(om);
         // 配置redisTemplate
-        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<String, Object>();
+        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(jedisConnectionFactory);
         RedisSerializer stringSerializer = new StringRedisSerializer();
         // key序列化
@@ -108,7 +108,7 @@ public class RedisConfig extends CachingConfigurerSupport {
     public CacheErrorHandler errorHandler() {
         // 异常处理，当Redis发生异常时，打印日志，但是程序正常走
         logger.info("初始化 -> [{}]", "Redis CacheErrorHandler");
-        CacheErrorHandler cacheErrorHandler = new CacheErrorHandler() {
+        return new CacheErrorHandler() {
             @Override
             public void handleCacheGetError(RuntimeException e, Cache cache, Object key) {
                 logger.error("Redis occur handleCacheGetError：key -> [{}]", key, e);
@@ -129,7 +129,6 @@ public class RedisConfig extends CachingConfigurerSupport {
                 logger.error("Redis occur handleCacheClearError：", e);
             }
         };
-        return cacheErrorHandler;
     }
 
     /**
@@ -162,9 +161,8 @@ public class RedisConfig extends CachingConfigurerSupport {
             JedisClientConfiguration.JedisClientConfigurationBuilder jedisClientConfiguration =
                     JedisClientConfiguration.builder();
             jedisClientConfiguration.connectTimeout(Duration.ofMillis(timeout));
-            JedisConnectionFactory factory = new JedisConnectionFactory(redisStandaloneConfiguration,
+            return new JedisConnectionFactory(redisStandaloneConfiguration,
                     jedisClientConfiguration.build());
-            return factory;
         }
 
         @Bean
@@ -174,8 +172,7 @@ public class RedisConfig extends CachingConfigurerSupport {
             jedisPoolConfig.setMaxIdle(maxIdle);
             jedisPoolConfig.setMaxWaitMillis(maxWaitMillis);
 
-            JedisPool jedisPool = new JedisPool(jedisPoolConfig, host, port, timeout, password);
-            return jedisPool;
+            return new JedisPool(jedisPoolConfig, host, port, timeout, password);
         }
     }
 }

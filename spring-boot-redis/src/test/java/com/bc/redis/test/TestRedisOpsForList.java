@@ -93,4 +93,25 @@ public class TestRedisOpsForList {
         String key = "listKey1";
         logger.info("brpop remove value: " + redisDao.lRightPop(key, 5L, TimeUnit.SECONDS));
     }
+
+    /**
+     * 测试rpoplpush
+     */
+    @Test
+    public void testRightPopAndLeftPush() {
+        String sourceKey = "listKey";
+        String destinationKey = "listKey1";
+        logger.info("rpoplpush remove value: " + redisDao.lRightPopAndLeftPush(sourceKey, destinationKey));
+    }
+
+    /**
+     * 测试brpoplpush
+     */
+    @Test
+    public void testBlockRightPopAndLeftPush() {
+        String sourceKey = "listKey";
+        String destinationKey = "listKey1";
+        logger.info("brpoplpush remove value: " +
+                redisDao.lRightPopAndLeftPush(sourceKey, destinationKey, 5L, TimeUnit.SECONDS));
+    }
 }
