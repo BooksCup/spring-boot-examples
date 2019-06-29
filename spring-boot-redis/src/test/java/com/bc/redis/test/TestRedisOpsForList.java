@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 测试redis操作list
@@ -73,5 +74,23 @@ public class TestRedisOpsForList {
         String value = "value4";
         long listSize = redisDao.lRightPushIfPresent(key, value);
         logger.info("list.size: " + listSize);
+    }
+
+    /**
+     * 测试rpop
+     */
+    @Test
+    public void testRightPop() {
+        String key = "listKey";
+        logger.info("rpop remove value: " + redisDao.lRightPop(key));
+    }
+
+    /**
+     * 测试brpop
+     */
+    @Test
+    public void testBlockRightPop() {
+        String key = "listKey1";
+        logger.info("brpop remove value: " + redisDao.lRightPop(key, 5L, TimeUnit.SECONDS));
     }
 }

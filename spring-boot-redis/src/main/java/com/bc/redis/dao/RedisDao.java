@@ -1,6 +1,5 @@
 package com.bc.redis.dao;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -116,7 +115,7 @@ public interface RedisDao {
      * @param key     键
      * @param value   值
      * @param timeout 过期时间(秒) timeout>0:timeout秒后过期  timeout<=0:无限期
-     * @return
+     * @return true: 设置成功  false: 设置失败
      */
     boolean set(String key, Object value, long timeout);
 
@@ -274,5 +273,23 @@ public interface RedisDao {
      * @return 执行rpushx操作后，列表的长度。如果key对应的列表不存在，返回0
      */
     long lRightPushIfPresent(String key, Object value);
+
+    /**
+     * 移除列表的最后一个元素，返回值为移除的元素
+     *
+     * @param key 键
+     * @return 移除的元素
+     */
+    Object lRightPop(String key);
+
+    /**
+     * 移出并获取列表的最后一个元素， 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止
+     *
+     * @param key     键
+     * @param timeout 超时时间
+     * @param unit    时间颗粒度转换单元
+     * @return 假如在指定时间内没有任何元素被弹出，则返回null。反之，返回列表的最后一个元素
+     */
+    Object lRightPop(String key, long timeout, TimeUnit unit);
     // ===== ops for list end =====
 }
