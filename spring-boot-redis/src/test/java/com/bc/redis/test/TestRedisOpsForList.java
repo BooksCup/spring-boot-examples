@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -182,5 +183,46 @@ public class TestRedisOpsForList {
     public void testBlockLeftPop() {
         String key = "listKey2";
         logger.info("blpop remove value: " + redisDao.lLeftPop(key, 5L, TimeUnit.SECONDS));
+    }
+
+    /**
+     * 测试lRange
+     */
+    @Test
+    public void testListRange() {
+        String key = "listKey";
+        List<Object> valueList = redisDao.lRange(key, 0, -1);
+        logger.info("=== list value ===");
+        for (Object value : valueList) {
+            logger.info(null == value ? "" : value.toString());
+        }
+    }
+
+    /**
+     * 测试ltrim
+     */
+    @Test
+    public void testListTrim() {
+        String key = "listKey";
+        redisDao.lTrim(key, 1, -1);
+        logger.info("trim finish.");
+        List<Object> valueList = redisDao.lRange(key, 0, -1);
+        logger.info("=== list value ===");
+        for (Object value : valueList) {
+            logger.info(null == value ? "" : value.toString());
+        }
+    }
+
+    /**
+     * 测试lindex
+     */
+    @Test
+    public void testListIndex() {
+        String key = "listKey";
+        List<Object> valueList = redisDao.lRange(key, 0, -1);
+        for (int i = 0; i < valueList.size(); i++) {
+            long index = i;
+            logger.info("valueList[" + index + "] = " + redisDao.lIndex(key, index));
+        }
     }
 }

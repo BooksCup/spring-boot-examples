@@ -344,6 +344,56 @@ public class RedisDaoImpl implements RedisDao {
 
 
     // ===== ops for list begin =====
+    /**
+     * 返回列表中指定区间内的元素，区间以偏移量START和END指定
+     * 其中0表示列表的第一个元素，1表示列表的第二个元素，以此类推
+     * 也可以使用负数下标，以-1表示列表的最后一个元素，-2表示列表的倒数第二个元素，以此类推
+     *
+     * @param key   键
+     * @param start 区间开始([)
+     * @param end   区间结束(])
+     * @return 一个列表，包含指定区间内的元素
+     */
+    @Override
+    public List<Object> lRange(String key, long start, long end) {
+        return redisTemplate.opsForList().range(key, start, end);
+    }
+
+    /**
+     * 对一个列表进行修剪(trim)，就是说，让列表只保留指定区间内的元素，不在指定区间之内的元素都将被删除
+     * 下标0表示列表的第一个元素，以1表示列表的第二个元素，以此类推
+     * 也可以使用负数下标，以-1表示列表的最后一个元素，-2表示列表的倒数第二个元素，以此类推
+     * 举个例子: 有个list的value为["value1", "value2", "value3"]
+     * 执行trim(key, 1, -1)后list的value会变成["value2", "value3"]
+     *
+     * @param key   键
+     * @param start 区间开始([)
+     * @param end   区间结束(])
+     * @return true: 修剪成功   false: 修剪失败
+     */
+    @Override
+    public boolean lTrim(String key, long start, long end) {
+        try {
+            redisTemplate.opsForList().trim(key, start, end);
+            return true;
+        } catch (Exception e) {
+            logger.error("list trim error: " + e.getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * 通过索引获取列表中的元素
+     * 也可以使用负数下标，以-1表示列表的最后一个元素，-2表示列表的倒数第二个元素，以此类推
+     *
+     * @param key   键
+     * @param index 索引
+     * @return 列表中下标为指定索引值的元素。如果指定索引值不在列表的区间范围内，返回null
+     */
+    @Override
+    public Object lIndex(String key, long index) {
+        return redisTemplate.opsForList().index(key, index);
+    }
 
     /**
      * 将值插入到列表的尾部(最右边)
@@ -534,5 +584,6 @@ public class RedisDaoImpl implements RedisDao {
     public Object lLeftPop(String key, long timeout, TimeUnit unit) {
         return redisTemplate.opsForList().leftPop(key, timeout, unit);
     }
+
     // ===== ops for list end =====
 }
