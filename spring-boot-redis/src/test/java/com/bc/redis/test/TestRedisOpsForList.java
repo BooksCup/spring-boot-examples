@@ -225,4 +225,51 @@ public class TestRedisOpsForList {
             logger.info("valueList[" + index + "] = " + redisDao.lIndex(key, index));
         }
     }
+
+    /**
+     * 测试lset
+     */
+    @Test
+    public void testListSet() {
+        String key = "listKey1111";
+        long index = 0L;
+        String value = "value6";
+        redisDao.lSet(key, index, value);
+    }
+
+    /**
+     * 测试lremove
+     * 第一个用例，count < 0
+     */
+    @Test
+    public void testListRemove1() {
+        String key = "testRemoveKey";
+        redisDao.lRightPushAll(key, "value2", "value2", "midValue", "value2", "value2");
+        long removeCount = redisDao.lRemove(key, -2, "value2");
+        logger.info("lrem, removeCount: " + removeCount);
+    }
+
+    /**
+     * 测试lremove
+     * 第二个用例，count > 0
+     */
+    @Test
+    public void testListRemove2() {
+        String key = "testRemoveKey";
+        redisDao.lRightPushAll(key, "value2", "value2", "midValue", "value2", "value2");
+        long removeCount = redisDao.lRemove(key, 2, "value2");
+        logger.info("lrem, removeCount: " + removeCount);
+    }
+
+    /**
+     * 测试lremove
+     * 第三个用例，count = 0
+     */
+    @Test
+    public void testListRemove3() {
+        String key = "testRemoveKey";
+        redisDao.lRightPushAll(key, "value2", "value2", "midValue", "value2", "value2");
+        long removeCount = redisDao.lRemove(key, 0, "value2");
+        logger.info("lrem, removeCount: " + removeCount);
+    }
 }

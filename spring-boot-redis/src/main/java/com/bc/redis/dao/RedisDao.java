@@ -226,6 +226,7 @@ public interface RedisDao {
     // ===== ops for string end =====
 
     // ===== ops for list begin =====
+
     /**
      * 返回列表中指定区间内的元素，区间以偏移量START和END指定
      * 其中0表示列表的第一个元素，1表示列表的第二个元素，以此类推
@@ -261,6 +262,34 @@ public interface RedisDao {
      * @return 列表中下标为指定索引值的元素。如果指定索引值不在列表的区间范围内，返回null
      */
     Object lIndex(String key, long index);
+
+    /**
+     * 通过索引来设置元素的值
+     * 当索引参数超出范围，或对一个空列表进行LSET时，会返回一个错误
+     * 对空列表进行LSET时，会报如下错误:
+     * redis.clients.jedis.exceptions.JedisDataException: ERR no such key
+     * 当索引参数超出范围，会报如下错误:
+     * redis.clients.jedis.exceptions.JedisDataException: ERR index out of range
+     *
+     * @param key   键
+     * @param index 索引
+     * @param value 值
+     * @return true:设置成功  false:设置失败
+     */
+    boolean lSet(String key, long index, Object value);
+
+    /**
+     * 根据参数COUNT的值，移除列表中与参数VALUE相等的元素
+     * count > 0 : 从表头开始向表尾搜索，移除与VALUE相等的元素，数量为COUNT
+     * count < 0 : 从表尾开始向表头搜索，移除与VALUE相等的元素，数量为COUNT的绝对值
+     * count = 0 : 移除表中所有与VALUE相等的值
+     *
+     * @param key   键
+     * @param count 移除元素的数量
+     * @param value 值
+     * @return 被移除元素的数量。列表不存在时返回0
+     */
+    long lRemove(String key, long count, Object value);
 
     /**
      * 将值插入到列表的尾部(最右边)
