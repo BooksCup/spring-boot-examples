@@ -356,5 +356,23 @@ public interface RedisDao {
      * @return 执行lpushx操作后，列表的长度。如果key对应的列表不存在，返回0
      */
     long lLeftPushIfPresent(String key, Object value);
+
+    /**
+     * 移除并返回列表的第一个元素
+     *
+     * @param key 键
+     * @return 移除的元素
+     */
+    Object lLeftPop(String key);
+
+    /**
+     * 移出并获取列表的第一个元素， 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止
+     *
+     * @param key     键
+     * @param timeout 超时时间
+     * @param unit    时间颗粒度转换单元
+     * @return 假如在指定时间内没有任何元素被弹出，则返回null。反之，返回列表的第一个元素
+     */
+    Object lLeftPop(String key, long timeout, TimeUnit unit);
     // ===== ops for list end =====
 }

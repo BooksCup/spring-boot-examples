@@ -510,5 +510,29 @@ public class RedisDaoImpl implements RedisDao {
     public long lLeftPushIfPresent(String key, Object value) {
         return redisTemplate.opsForList().leftPushIfPresent(key, value);
     }
+
+    /**
+     * 移除并返回列表的第一个元素
+     *
+     * @param key 键
+     * @return 移除的元素
+     */
+    @Override
+    public Object lLeftPop(String key) {
+        return redisTemplate.opsForList().leftPop(key);
+    }
+
+    /**
+     * 移出并获取列表的第一个元素， 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止
+     *
+     * @param key     键
+     * @param timeout 超时时间
+     * @param unit    时间颗粒度转换单元
+     * @return 假如在指定时间内没有任何元素被弹出，则返回null。反之，返回列表的第一个元素
+     */
+    @Override
+    public Object lLeftPop(String key, long timeout, TimeUnit unit) {
+        return redisTemplate.opsForList().leftPop(key, timeout, unit);
+    }
     // ===== ops for list end =====
 }

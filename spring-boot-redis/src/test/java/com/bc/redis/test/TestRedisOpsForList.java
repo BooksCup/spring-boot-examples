@@ -165,4 +165,22 @@ public class TestRedisOpsForList {
         long listSize = redisDao.lLeftPushIfPresent(key, value);
         logger.info("list.size: " + listSize);
     }
+
+    /**
+     * 测试lpop
+     */
+    @Test
+    public void testLeftPop() {
+        String key = "listKey";
+        logger.info("lpop remove value: " + redisDao.lLeftPop(key));
+    }
+
+    /**
+     * 测试blpop
+     */
+    @Test
+    public void testBlockLeftPop() {
+        String key = "listKey2";
+        logger.info("blpop remove value: " + redisDao.lLeftPop(key, 5L, TimeUnit.SECONDS));
+    }
 }
