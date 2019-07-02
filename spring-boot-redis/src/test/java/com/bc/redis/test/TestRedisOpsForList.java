@@ -61,7 +61,9 @@ public class TestRedisOpsForList {
         String value1 = "value1";
         String value2 = "value2";
         String value3 = "value3";
-        long listSize = redisDao.lRightPushAll(key, value1, value2, value3);
+        String value4 = "value4";
+        String value5 = "value2";
+        long listSize = redisDao.lRightPushAll(key, value1, value2, value3, value4, value5);
         logger.info("list.size: " + listSize);
     }
 
@@ -113,5 +115,54 @@ public class TestRedisOpsForList {
         String destinationKey = "listKey1";
         logger.info("brpoplpush remove value: " +
                 redisDao.lRightPopAndLeftPush(sourceKey, destinationKey, 5L, TimeUnit.SECONDS));
+    }
+
+    /**
+     * 测试lpush
+     */
+    @Test
+    public void testLeftPush() {
+        String key = "listKey1";
+        String value = "listValue1";
+        long listSize = redisDao.lLeftPush(key, value);
+        logger.info("list.size: " + listSize);
+    }
+
+    /**
+     * 测试lpush(带支点)
+     */
+    @Test
+    public void testLeftPushWithPivot() {
+        String key = "listKey";
+        String pivot = "value2";
+        String value = "newValue";
+        long listSize = redisDao.lLeftPush(key, pivot, value);
+        logger.info("list.size: " + listSize);
+    }
+
+    /**
+     * 测试批量lpush
+     */
+    @Test
+    public void testBatchLeftPush() {
+        String key = "listKey";
+        String value1 = "value1";
+        String value2 = "value2";
+        String value3 = "value3";
+        String value4 = "value4";
+        String value5 = "value5";
+        long listSize = redisDao.lLeftPushAll(key, value1, value2, value3, value4, value5);
+        logger.info("list.size: " + listSize);
+    }
+
+    /**
+     * 测试leftPushIfPresent
+     */
+    @Test
+    public void testLeftPushIfPresent() {
+        String key = "listKey1";
+        String value = "value4";
+        long listSize = redisDao.lLeftPushIfPresent(key, value);
+        logger.info("list.size: " + listSize);
     }
 }

@@ -454,5 +454,61 @@ public class RedisDaoImpl implements RedisDao {
                                        long timeout, TimeUnit unit) {
         return redisTemplate.opsForList().rightPopAndLeftPush(sourceKey, destinationKey, timeout, unit);
     }
+
+    /**
+     * 将值插入到列表的头部(最左边)
+     * 如果列表不存在，一个空列表会被创建并执行LPUSH操作
+     * 当列表存在但不是列表类型时，返回一个错误
+     *
+     * @param key   键
+     * @param value 值
+     * @return 执行LPUSH操作后，列表的长度
+     */
+    @Override
+    public long lLeftPush(String key, Object value) {
+        return redisTemplate.opsForList().leftPush(key, value);
+    }
+
+    /**
+     * 将值插入到列表中第一次出现支点(pivot)的左侧
+     * 举个例子: list.value为 ["value1", "value2", "value3", "value4", "value2"]
+     * 调用lLightPush(key, "value2", "newValue")后
+     * list.value会变成 ["value1", "newValue", "value2", "value3", "value4", "value2"]
+     *
+     * @param key   键
+     * @param pivot 支点
+     * @param value 值
+     * @return 执行LPUSH操作后，列表的长度
+     */
+    @Override
+    public long lLeftPush(String key, Object pivot, Object value) {
+        return redisTemplate.opsForList().leftPush(key, pivot, value);
+    }
+
+    /**
+     * 批量lpush
+     * 将多个值插入到列表头部(最左边)
+     *
+     * @param key    键
+     * @param values 多个值
+     * @return 执行LPUSH操作后，列表的长度
+     */
+    @Override
+    public long lLeftPushAll(String key, Object... values) {
+        return redisTemplate.opsForList().leftPushAll(key, values);
+    }
+
+    /**
+     * 将一个值插入到已存在的列表头部(最左边)
+     * 如果列表不存在，操作无效。
+     *
+     * @param key   键
+     * @param value 值
+     * @return 执行lpushx操作后，列表的长度。如果key对应的列表不存在，返回0
+     */
+    @Override
+    public long lLeftPushIfPresent(String key, Object value) {
+        return redisTemplate.opsForList().leftPushIfPresent(key, value);
+    }
     // ===== ops for list end =====
 }
