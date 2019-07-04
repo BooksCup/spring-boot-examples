@@ -568,6 +568,51 @@ public interface RedisDao {
      * @param member 成员元素
      * @return true: 成员元素是集合的成员   false: 成员元素不是集合的成员 或 key不存在
      */
-    boolean isMember(String key, Object member);
+    boolean sIsMember(String key, Object member);
+
+    /**
+     * 返回集合中的所有的成员
+     * 不存在的集合 key 被视为空集合
+     *
+     * @param key 键
+     * @return 集合中的所有成员
+     */
+    Set<Object> sMembers(String key);
+
+    /**
+     * 将指定成员member元素从source集合移动到destination集合
+     * smove是原子性操作
+     * 如果source集合不存在或不包含指定的member元素，则不执行任何操作
+     * 否则，member元素从source集合中被移除，并添加到destination集合中去
+     * 当destination集合已经包含member元素时，只是简单地将source集合中的member元素删除
+     * 当source或destination不是集合类型时，返回一个错误
+     *
+     * @param key     source
+     * @param value   成员member元素
+     * @param destKey destination
+     * @return true: 成员元素被成功移除  false: 如果成员元素不是source集合的成员，并且没有任何操作对destination集合执行
+     */
+    boolean sMove(String key, Object value, String destKey);
+
+    /**
+     * 移除集合中的指定key的一个或多个随机元素
+     * 移除后会返回移除的元素
+     * 该命令类似srandmember命令，但spop将随机元素从集合中移除并返回，而srandmember则仅仅返回随机元素，而不对集合进行任何改动
+     *
+     * @param key 键
+     * @return 被移除的随机元素。当集合不存在或是空集时，返回null
+     */
+    Object sPop(String key);
+
+    /**
+     * 移除集合中的指定key的多个随机元素
+     * 移除后会返回移除的元素
+     * 该命令类似srandmember命令，但spop将随机元素从集合中移除并返回，而srandmember则仅仅返回随机元素，而不对集合进行任何改动
+     *
+     * @param key   键
+     * @param count 移除数量
+     * @return 被移除的随机元素。当集合不存在或是空集时，返回null
+     */
+    List<Object> sPop(String key, long count);
     // ===== ops for set end =====
 }

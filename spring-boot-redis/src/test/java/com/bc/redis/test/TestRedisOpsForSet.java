@@ -178,7 +178,52 @@ public class TestRedisOpsForSet {
     public void testSetIsMember() {
         String key = "setKey";
         String member = "a";
-        logger.info(member + (redisDao.isMember(key, member) ? " is " : " is not ")
+        logger.info(member + (redisDao.sIsMember(key, member) ? " is " : " is not ")
                 + "the member of " + key);
+    }
+
+    /**
+     * 测试smembers
+     */
+    @Test
+    public void testGetSetMembers() {
+        String key = "setKey";
+        Set<Object> memberSet = redisDao.sMembers(key);
+        logger.info("===== get members =====");
+        for (Object member : memberSet) {
+            logger.info(member == null ? "" : member.toString());
+        }
+    }
+
+    /**
+     * 测试smove
+     */
+    @Test
+    public void testSetMove() {
+        String key = "setKey";
+        String value = "a";
+        String destKey = "setKey4";
+        redisDao.sMove(key, value, destKey);
+    }
+
+    /**
+     * 测试spop(一个随机元素)
+     */
+    @Test
+    public void testSetPop() {
+        String key = "setKey";
+        logger.info("set pop element: " + redisDao.sPop(key));
+    }
+
+    /**
+     * 测试spop(多个随机元素)
+     */
+    @Test
+    public void testSetPopManyElements() {
+        String key = "setKey";
+        List<Object> popElementList = redisDao.sPop(key, 3);
+        for (Object popElement : popElementList) {
+            logger.info("set pop element: " + popElement);
+        }
     }
 }
