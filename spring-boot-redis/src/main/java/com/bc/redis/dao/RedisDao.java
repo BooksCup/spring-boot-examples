@@ -1,7 +1,9 @@
 package com.bc.redis.dao;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -439,4 +441,58 @@ public interface RedisDao {
      */
     Object lLeftPop(String key, long timeout, TimeUnit unit);
     // ===== ops for list end =====
+
+    // ===== ops for set begin =====
+
+    /**
+     * 将一个或多个成员元素加入到集合中，已经存在于集合的成员元素将被忽略
+     * 假如集合key不存在，则创建一个只包含添加的元素作成员的集合
+     * 当集合key不是集合类型时，返回如下一个错误:
+     * redis.clients.jedis.exceptions.JedisDataException: WRONGTYPE Operation against a key holding the wrong kind of value
+     *
+     * @param key    键
+     * @param values 一个或多个成员元素
+     * @return 被添加到集合中的新元素的数量，不包括被忽略的元素
+     */
+    long sAdd(String key, Object... values);
+
+    /**
+     * 返回集合中元素的数量
+     * redis命令: Scard
+     *
+     * @param key 键
+     * @return 集合中元素的数量
+     */
+    long sSize(String key);
+
+    /**
+     * 返回给定集合之间的差集。不存在的集合key将视为空集
+     * 差集的结果来自前面的FIRST_KEY,而不是后面的OTHER_KEY，也不是整个FIRST_KEY OTHER_KEY的差集
+     * 举个例子:
+     * key对应的value为["a", "b"]
+     * otherKey对应的value为["b", "c"]
+     * sdiff key otherKey的结果为["a"]
+     * sdiff otherKey key的结果为["c"]
+     *
+     * @param key      第一个键，也是产生差值结果的key
+     * @param otherKey 第二个键
+     * @return 包含差集成员的列表
+     */
+    Set<Object> sDifference(String key, String otherKey);
+
+    /**
+     * 返回给定集合之间的差集。不存在的集合key将视为空集
+     * 差集的结果来自前面的FIRST_KEY,而不是后面的OTHER_KEY1，也不是整个FIRST_KEY OTHER_KEY1..OTHER_KEYN的差集
+     * 举个例子:
+     * key对应的value为["a", "b", "c", "d"]
+     * otherKey1对应的value为["c"]
+     * otherKey2对应的value为["a", "c", "e"]
+     * sdiff key otherKey1 otherKey2的结果为["b", "d"]
+     *
+     * @param key       第一个键，也是产生差值结果的key
+     * @param otherKeys 其他键
+     * @return 包含差集成员的列表
+     */
+    Set<Object> sDifference(String key, Collection<String> otherKeys);
+    // ===== ops for set end =====
 }
