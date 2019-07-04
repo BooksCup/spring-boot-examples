@@ -686,13 +686,41 @@ public class RedisDaoImpl implements RedisDao {
      * otherKey2对应的value为["a", "c", "e"]
      * sdiff key otherKey1 otherKey2的结果为["b", "d"]
      *
-     * @param key      第一个键，也是产生差值结果的key
+     * @param key       第一个键，也是产生差值结果的key
      * @param otherKeys 其他键
      * @return 包含差集成员的列表
      */
     @Override
     public Set<Object> sDifference(String key, Collection<String> otherKeys) {
         return redisTemplate.opsForSet().difference(key, otherKeys);
+    }
+
+    /**
+     * 将给定集合之间的差集存储在指定的集合(destination)中
+     * 如果指定的集合key已存在，则会被覆盖
+     *
+     * @param key      第一个键，也是产生差值结果的key
+     * @param otherKey 第二个键
+     * @param destKey  destination
+     * @return 结果集中的元素数量
+     */
+    @Override
+    public long sDifferenceAndStore(String key, String otherKey, String destKey) {
+        return redisTemplate.opsForSet().differenceAndStore(key, otherKey, destKey);
+    }
+
+    /**
+     * 将给定集合之间的差集存储在指定的集合(destination)中
+     * 如果指定的集合key已存在，则会被覆盖
+     *
+     * @param key       第一个键，也是产生差值结果的key
+     * @param otherKeys 其他键
+     * @param destKey   destination
+     * @return 结果集中的元素数量
+     */
+    @Override
+    public long sDifferenceAndStore(String key, Collection<String> otherKeys, String destKey) {
+        return redisTemplate.opsForSet().differenceAndStore(key, otherKeys, destKey);
     }
     // ===== ops for set end =====
 }
