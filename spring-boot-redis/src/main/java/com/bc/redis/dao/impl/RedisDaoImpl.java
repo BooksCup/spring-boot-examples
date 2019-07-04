@@ -722,5 +722,73 @@ public class RedisDaoImpl implements RedisDao {
     public long sDifferenceAndStore(String key, Collection<String> otherKeys, String destKey) {
         return redisTemplate.opsForSet().differenceAndStore(key, otherKeys, destKey);
     }
+
+    /**
+     * 返回给定所有给定集合的交集
+     * 不存在的集合key被视为空集
+     * 当给定集合当中有一个空集时，结果也为空集(根据集合运算定律)
+     *
+     * @param key      第一个键
+     * @param otherKey 第二个键
+     * @return 交集成员的列表
+     */
+    @Override
+    public Set<Object> sIntersect(String key, String otherKey) {
+        return redisTemplate.opsForSet().intersect(key, otherKey);
+    }
+
+    /**
+     * 返回给定所有给定集合的交集
+     * 不存在的集合key被视为空集
+     * 当给定集合当中有一个空集时，结果也为空集(根据集合运算定律)
+     *
+     * @param key       第一个键
+     * @param otherKeys 其他键
+     * @return 交集成员的列表
+     */
+    @Override
+    public Set<Object> sIntersect(String key, Collection<String> otherKeys) {
+        return redisTemplate.opsForSet().intersect(key, otherKeys);
+    }
+
+    /**
+     * 将给定集合之间的交集存储在指定的集合中
+     * 如果指定的集合已经存在，则将其覆盖
+     *
+     * @param key      第一个键
+     * @param otherKey 第二个键
+     * @param destKey  destination
+     * @return 存储交集的集合的元素数量
+     */
+    @Override
+    public long sIntersectAndStore(String key, String otherKey, String destKey) {
+        return redisTemplate.opsForSet().intersectAndStore(key, otherKey, destKey);
+    }
+
+    /**
+     * 将给定集合之间的交集存储在指定的集合中
+     * 如果指定的集合已经存在，则将其覆盖
+     *
+     * @param key       第一个键
+     * @param otherKeys 其他键
+     * @param destKey   destination
+     * @return 存储交集的集合的元素数量
+     */
+    @Override
+    public long sIntersectAndStore(String key, Collection<String> otherKeys, String destKey) {
+        return redisTemplate.opsForSet().intersectAndStore(key, otherKeys, destKey);
+    }
+
+    /**
+     * 判断成员元素是否是集合的成员
+     *
+     * @param key    键
+     * @param member 成员元素
+     * @return true: 成员元素是集合的成员   false: 成员元素不是集合的成员 或 key不存在
+     */
+    @Override
+    public boolean isMember(String key, Object member) {
+        return redisTemplate.opsForSet().isMember(key, member);
+    }
     // ===== ops for set end =====
 }
