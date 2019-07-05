@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
@@ -35,8 +36,9 @@ public class TestRedisOpsForSet {
      */
     @Test
     public void testSetAdd() {
-        String key = "setKey3";
-        long addNum = redisDao.sAdd(key, "a", "c", "e");
+        String key = "setKey";
+//        long addNum = redisDao.sAdd(key, "张三", "李四", "王五", "张六", "王七");
+        long addNum = redisDao.sAdd(key, "hello", "hi", "bar", "steven", "stun");
         logger.info("add element to set, add num: " + addNum);
     }
 
@@ -225,5 +227,36 @@ public class TestRedisOpsForSet {
         for (Object popElement : popElementList) {
             logger.info("set pop element: " + popElement);
         }
+    }
+
+    /**
+     * 测试srandmember(一个随机元素)
+     */
+    @Test
+    public void testSetRandMember() {
+        String key = "setKey";
+        logger.info("get a random member from set: " + redisDao.sRandomMember(key));
+    }
+
+    /**
+     * 测试srandmember(多个随机元素)
+     */
+    @Test
+    public void testSetRandMemberGetManyElements() {
+        String key = "setKey";
+        List<Object> randomMemberList = redisDao.sRandomMembers(key, 3);
+        for (Object randomMember : randomMemberList) {
+            logger.info("get a random member from set: " + randomMember);
+        }
+    }
+
+    /**
+     * 测试srem
+     */
+    @Test
+    public void testSetRemove() {
+        String key = "setKey";
+        long removeNumber = redisDao.sRemove(key, "c", "e");
+        logger.info("remove value from set, removeNumber: " + removeNumber);
     }
 }

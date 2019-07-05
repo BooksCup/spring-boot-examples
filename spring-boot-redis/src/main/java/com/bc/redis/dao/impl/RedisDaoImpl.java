@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -824,7 +821,8 @@ public class RedisDaoImpl implements RedisDao {
     /**
      * 移除集合中的指定key的一个随机元素
      * 移除后会返回移除的元素
-     * 该命令类似srandmember命令，但spop将随机元素从集合中移除并返回，而srandmember则仅仅返回随机元素，而不对集合进行任何改动
+     * 该命令类似srandmember命令，但spop将随机元素从集合中移除并返回，
+     * 而srandmember则仅仅返回随机元素，而不对集合进行任何改动
      *
      * @param key 键
      * @return 被移除的随机元素。当集合不存在或是空集时，返回null
@@ -837,7 +835,8 @@ public class RedisDaoImpl implements RedisDao {
     /**
      * 移除集合中的指定key的多个随机元素
      * 移除后会返回移除的元素
-     * 该命令类似srandmember命令，但spop将随机元素从集合中移除并返回，而srandmember则仅仅返回随机元素，而不对集合进行任何改动
+     * 该命令类似srandmember命令，但spop将随机元素从集合中移除并返回，
+     * 而srandmember则仅仅返回随机元素，而不对集合进行任何改动
      *
      * @param key   键
      * @param count 移除数量
@@ -846,6 +845,45 @@ public class RedisDaoImpl implements RedisDao {
     @Override
     public List<Object> sPop(String key, long count) {
         return redisTemplate.opsForSet().pop(key, count);
+    }
+
+    /**
+     * 返回集合中的一个随机元素
+     * 该操作和spop相似，但spop将随机元素从集合中移除并返回，
+     * 而srandmember则仅仅返回随机元素，而不对集合进行任何改动
+     *
+     * @param key 键
+     * @return 集合中的一个随机元素；如果集合为空，返回null
+     */
+    @Override
+    public Object sRandomMember(String key) {
+        return redisTemplate.opsForSet().randomMember(key);
+    }
+
+    /**
+     * 返回集合中的多个随机元素
+     * 该操作和spop相似，但spop将随机元素从集合中移除并返回，
+     * 而srandmember则仅仅返回随机元素，而不对集合进行任何改动
+     *
+     * @param key   键
+     * @param count 随机元素的数量
+     * @return 集合中的一个随机数组；如果集合为空，返回空数组
+     */
+    @Override
+    public List<Object> sRandomMembers(String key, long count) {
+        return redisTemplate.opsForSet().randomMembers(key, count);
+    }
+
+    /**
+     * 移除集合中的一个或多个成员元素，不存在的成员元素会被忽略
+     *
+     * @param key    键
+     * @param values 一个或多个成员元素
+     * @return 被成功移除的元素的数量，不包括被忽略的元素
+     */
+    @Override
+    public long sRemove(String key, Object... values) {
+        return redisTemplate.opsForSet().remove(key, values);
     }
     // ===== ops for set end =====
 }
