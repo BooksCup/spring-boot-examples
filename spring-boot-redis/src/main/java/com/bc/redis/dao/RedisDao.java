@@ -562,6 +562,48 @@ public interface RedisDao {
     long sIntersectAndStore(String key, Collection<String> otherKeys, String destKey);
 
     /**
+     * 返回给定集合的并集
+     * 不存在的集合key被视为空集
+     *
+     * @param key      第一个键
+     * @param otherKey 第二个键
+     * @return 并集成员的列表
+     */
+    Set<Object> sUnion(String key, String otherKey);
+
+    /**
+     * 返回给定集合的并集
+     * 不存在的集合key被视为空集
+     *
+     * @param key       第一个键
+     * @param otherKeys 其他键
+     * @return 并集成员的列表
+     */
+    Set<Object> sUnion(String key, Collection<String> otherKeys);
+
+    /**
+     * 将给定集合的并集存储在指定的集合destination中
+     * 如果destination已经存在，则将其覆盖
+     *
+     * @param key      第一个键
+     * @param otherKey 第二个键
+     * @param destKey  destination
+     * @return 结果集中的元素数量
+     */
+    long sUnionAndStore(String key, String otherKey, String destKey);
+
+    /**
+     * 将给定集合的并集存储在指定的集合destination中
+     * 如果destination已经存在，则将其覆盖
+     *
+     * @param key       第一个键
+     * @param otherKeys 其他键
+     * @param destKey   destination
+     * @return 结果集中的元素数量
+     */
+    long sUnionAndStore(String key, Collection<String> otherKeys, String destKey);
+
+    /**
      * 判断成员元素是否是集合的成员
      *
      * @param key    键

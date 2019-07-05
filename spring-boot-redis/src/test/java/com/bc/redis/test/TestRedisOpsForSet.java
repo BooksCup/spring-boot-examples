@@ -7,7 +7,6 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
@@ -126,7 +125,6 @@ public class TestRedisOpsForSet {
         }
     }
 
-
     /**
      * 测试sinter(多个key)
      */
@@ -172,6 +170,67 @@ public class TestRedisOpsForSet {
         long destSetSize = redisDao.sIntersectAndStore(key, otherKeyList, destKey);
         logger.info("dest set size: " + destSetSize);
     }
+
+    /**
+     * 测试sunion(两个key)
+     */
+    @Test
+    public void testSetUnion() {
+        String key = "setKey2";
+        String otherKey = "setKey4";
+        Set<Object> resultSet = redisDao.sUnion(key, otherKey);
+        logger.info("===== get union =====");
+        for (Object result : resultSet) {
+            logger.info(result == null ? "" : result.toString());
+        }
+    }
+
+    /**
+     * 测试sunion(多个key)
+     */
+    @Test
+    public void testSetUnionWithManyOtherKeys() {
+        String key = "setKey";
+        String otherKey1 = "setKey2";
+        String otherKey2 = "setKey4";
+        List<String> otherKeyList = new ArrayList<>();
+        otherKeyList.add(otherKey1);
+        otherKeyList.add(otherKey2);
+        Set<Object> resultSet = redisDao.sUnion(key, otherKeyList);
+        logger.info("===== get union =====");
+        for (Object result : resultSet) {
+            logger.info(result == null ? "" : result.toString());
+        }
+    }
+
+    /**
+     * 测试sunionstore(两个key)
+     */
+    @Test
+    public void testSetUnionAndStore() {
+        String key = "setKey2";
+        String otherKey = "setKey4";
+        String destKey = "setKey5";
+        long destSetSize = redisDao.sUnionAndStore(key, otherKey, destKey);
+        logger.info("dest set size: " + destSetSize);
+    }
+
+    /**
+     * 测试sunionstore(多个key)
+     */
+    @Test
+    public void testSetUnionAndStoreWithManyOtherKeys() {
+        String key = "setKey";
+        String otherKey1 = "setKey2";
+        String otherKey2 = "setKey4";
+        String destKey = "setKey5";
+        List<String> otherKeyList = new ArrayList<>();
+        otherKeyList.add(otherKey1);
+        otherKeyList.add(otherKey2);
+        long destSetSize = redisDao.sUnionAndStore(key, otherKeyList, destKey);
+        logger.info("dest set size: " + destSetSize);
+    }
+
 
     /**
      * 测试sismember

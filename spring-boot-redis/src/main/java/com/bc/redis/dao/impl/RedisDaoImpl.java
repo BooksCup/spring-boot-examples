@@ -777,6 +777,60 @@ public class RedisDaoImpl implements RedisDao {
     }
 
     /**
+     * 返回给定集合的并集
+     * 不存在的集合key被视为空集
+     *
+     * @param key      第一个键
+     * @param otherKey 第二个键
+     * @return 并集成员的列表
+     */
+    @Override
+    public Set<Object> sUnion(String key, String otherKey) {
+        return redisTemplate.opsForSet().union(key, otherKey);
+    }
+
+    /**
+     * 返回给定集合的并集
+     * 不存在的集合key被视为空集
+     *
+     * @param key       第一个键
+     * @param otherKeys 其他键
+     * @return 并集成员的列表
+     */
+    @Override
+    public Set<Object> sUnion(String key, Collection<String> otherKeys) {
+        return redisTemplate.opsForSet().union(key, otherKeys);
+    }
+
+    /**
+     * 将给定集合的并集存储在指定的集合destination中
+     * 如果destination已经存在，则将其覆盖
+     *
+     * @param key      第一个键
+     * @param otherKey 第二个键
+     * @param destKey  destination
+     * @return 结果集中的元素数量
+     */
+    @Override
+    public long sUnionAndStore(String key, String otherKey, String destKey) {
+        return redisTemplate.opsForSet().unionAndStore(key, otherKey, destKey);
+    }
+
+    /**
+     * 将给定集合的并集存储在指定的集合destination中
+     * 如果destination已经存在，则将其覆盖
+     *
+     * @param key       第一个键
+     * @param otherKeys 其他键
+     * @param destKey   destination
+     * @return 结果集中的元素数量
+     */
+    @Override
+    public long sUnionAndStore(String key, Collection<String> otherKeys, String destKey) {
+        return redisTemplate.opsForSet().unionAndStore(key, otherKeys, destKey);
+    }
+
+    /**
      * 判断成员元素是否是集合的成员
      *
      * @param key    键
