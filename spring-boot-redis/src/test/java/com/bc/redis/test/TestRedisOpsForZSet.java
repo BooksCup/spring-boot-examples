@@ -129,12 +129,25 @@ public class TestRedisOpsForZSet {
                 + value + ", rank:" + rank);
     }
 
+    /**
+     * 测试zrem
+     */
     @Test
     public void testZremove() {
         String key = "zsetKey";
         String value1 = "zsetValue";
         String value2 = "zsetValue2";
         long removeNum = redisDao.zRemove(key, value1, value2);
+        logger.info("remove num: " + removeNum);
+    }
+
+    /**
+     * 测试zremrangebyrank
+     */
+    @Test
+    public void testZremoveRange() {
+        String key = "zsetKey";
+        long removeNum = redisDao.zRemoveRange(key, 0, 2);
         logger.info("remove num: " + removeNum);
     }
 }

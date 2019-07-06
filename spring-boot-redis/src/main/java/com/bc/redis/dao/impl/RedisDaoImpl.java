@@ -1075,6 +1075,19 @@ public class RedisDaoImpl implements RedisDao {
     public long zRemove(String key, Object... values) {
         return redisTemplate.opsForZSet().remove(key, values);
     }
+
+    /**
+     * 移除有序集中，指定排名(rank)区间内的所有成员
+     *
+     * @param key   键
+     * @param start 区间开始
+     * @param end   区间结束
+     * @return 被移除成员的数量
+     */
+    @Override
+    public long zRemoveRange(String key, long start, long end) {
+        return redisTemplate.opsForZSet().removeRange(key, start, end);
+    }
     // ===== ops for zset end =====
 
 }

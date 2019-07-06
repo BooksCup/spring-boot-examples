@@ -786,5 +786,15 @@ public interface RedisDao {
      * @return 被成功移除的成员的数量，不包括被忽略的成员
      */
     long zRemove(String key, Object... values);
+
+    /**
+     * 移除有序集中，指定排名(rank)区间内的所有成员
+     *
+     * @param key   键
+     * @param start 区间开始
+     * @param end   区间结束
+     * @return 被移除成员的数量
+     */
+    long zRemoveRange(String key, long start, long end);
     // ===== ops for set end =====
 }
