@@ -128,4 +128,13 @@ public class TestRedisOpsForZSet {
         logger.info("key: " + key + ", member: "
                 + value + ", rank:" + rank);
     }
+
+    @Test
+    public void testZremove() {
+        String key = "zsetKey";
+        String value1 = "zsetValue";
+        String value2 = "zsetValue2";
+        long removeNum = redisDao.zRemove(key, value1, value2);
+        logger.info("remove num: " + removeNum);
+    }
 }

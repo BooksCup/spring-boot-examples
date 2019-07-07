@@ -776,5 +776,15 @@ public interface RedisDao {
      * @return 如果成员是有序集key的成员，返回value的排名。如果成员不是有序集key的成员，返回一个空指针的错误
      */
     long zRank(String key, Object value);
+
+    /**
+     * 移除有序集中的一个或多个成员，不存在的成员将被忽略
+     * 当key存在但不是有序集类型时，返回一个错误
+     *
+     * @param key    键
+     * @param values 一个或多个成员
+     * @return 被成功移除的成员的数量，不包括被忽略的成员
+     */
+    long zRemove(String key, Object... values);
     // ===== ops for set end =====
 }

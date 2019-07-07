@@ -1062,6 +1062,19 @@ public class RedisDaoImpl implements RedisDao {
     public long zRank(String key, Object value) {
         return redisTemplate.opsForZSet().rank(key, value);
     }
+
+    /**
+     * 移除有序集中的一个或多个成员，不存在的成员将被忽略
+     * 当key存在但不是有序集类型时，返回一个错误
+     *
+     * @param key    键
+     * @param values 一个或多个成员
+     * @return 被成功移除的成员的数量，不包括被忽略的成员
+     */
+    @Override
+    public long zRemove(String key, Object... values) {
+        return redisTemplate.opsForZSet().remove(key, values);
+    }
     // ===== ops for zset end =====
 
 }
