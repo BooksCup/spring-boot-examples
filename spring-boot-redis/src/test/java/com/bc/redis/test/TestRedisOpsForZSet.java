@@ -116,4 +116,16 @@ public class TestRedisOpsForZSet {
         long destZsetSize = redisDao.zIntersectAndStore(key, otherKeys, destKey);
         logger.info("dest zset size: " + destZsetSize);
     }
+
+    /**
+     * 测试zrank
+     */
+    @Test
+    public void testZrank() {
+        String key = "zsetKey";
+        String value = "zsetValue";
+        long rank = redisDao.zRank(key, value);
+        logger.info("key: " + key + ", member: "
+                + value + ", rank:" + rank);
+    }
 }

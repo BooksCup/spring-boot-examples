@@ -766,5 +766,15 @@ public interface RedisDao {
      * @return 保存到目标结果集的的成员数量
      */
     long zIntersectAndStore(String key, Collection<String> otherKeys, String destKey);
+
+    /**
+     * 返回有序集中指定成员的排名(从0开始)
+     * 其中有序集成员按分数值递增(从小到大)顺序排列
+     *
+     * @param key   键
+     * @param value 值
+     * @return 如果成员是有序集key的成员，返回value的排名。如果成员不是有序集key的成员，返回一个空指针的错误
+     */
+    long zRank(String key, Object value);
     // ===== ops for set end =====
 }
