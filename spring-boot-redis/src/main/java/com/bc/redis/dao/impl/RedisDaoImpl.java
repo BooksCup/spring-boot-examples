@@ -4,7 +4,9 @@ import com.bc.redis.dao.RedisDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.DefaultTypedTuple;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -940,4 +942,44 @@ public class RedisDaoImpl implements RedisDao {
         return redisTemplate.opsForSet().remove(key, values);
     }
     // ===== ops for set end =====
+
+    // ===== ops for zset begin =====
+
+    /**
+     * 将一个成员元素及其分数值加入到有序集当中
+     * 如果这个成员已经是有序集的成员，那么更新这个成员的分数值，并通过重新插入这个成员元素，来保证该成员在正确的位置上
+     * 如果有序集合key不存在，则创建一个空的有序集并执行ZADD操作
+     * 当key存在但不是有序集类型时，返回一个错误
+     *
+     * @param key   键
+     * @param value 值
+     * @param score 分数
+     * @return true: 添加成功   false: 添加失败
+     */
+    @Override
+    public boolean zAdd(String key, Object value, double score) {
+        return redisTemplate.opsForZSet().add(key, value, score);
+    }
+
+    /**
+     * 将一个或多个成员元素及其分数值加入到有序集当中
+     * 如果某个成员已经是有序集的成员，那么更新这个成员的分数值，并通过重新插入这个成员元素，来保证该成员在正确的位置上
+     * 如果有序集合key不存在，则创建一个空的有序集并执行ZADD操作
+     * 当key存在但不是有序集类型时，返回一个错误
+     *
+     * @param key           键
+     * @param valueScoreMap 成员元素及分数map key: 成员元素的值 value: 分数
+     * @return 被成功添加的新成员的数量，不包括那些被更新的、已经存在的成员。
+     */
+    @Override
+    public long zAdd(String key, Map<String, Double> valueScoreMap) {
+        Set<ZSetOperations.TypedTuple<Object>> tuples = new HashSet();
+        for (Map.Entry<String, Double> entry : valueScoreMap.entrySet()) {
+            ZSetOperations.TypedTuple<Object> tuple = new DefaultTypedTuple<>(entry.getKey(), entry.getValue());
+            tuples.add(tuple);
+        }
+        return redisTemplate.opsForZSet().add(key, tuples);
+    }
+    // ===== ops for zset end =====
+
 }

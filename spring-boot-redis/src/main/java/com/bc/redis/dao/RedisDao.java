@@ -688,5 +688,30 @@ public interface RedisDao {
      * @return 被成功移除的元素的数量，不包括被忽略的元素
      */
     long sRemove(String key, Object... values);
+
+    /**
+     * 将一个成员元素及其分数值加入到有序集当中
+     * 如果某个成员已经是有序集的成员，那么更新这个成员的分数值，并通过重新插入这个成员元素，来保证该成员在正确的位置上
+     * 如果有序集合 key 不存在，则创建一个空的有序集并执行 ZADD 操作
+     * 当 key 存在但不是有序集类型时，返回一个错误
+     *
+     * @param key   键
+     * @param value 值
+     * @param score 分数
+     * @return true: 添加成功   false: 添加失败
+     */
+    boolean zAdd(String key, Object value, double score);
+
+    /**
+     * 将一个或多个成员元素及其分数值加入到有序集当中
+     * 如果某个成员已经是有序集的成员，那么更新这个成员的分数值，并通过重新插入这个成员元素，来保证该成员在正确的位置上
+     * 如果有序集合key不存在，则创建一个空的有序集并执行ZADD操作
+     * 当key存在但不是有序集类型时，返回一个错误
+     *
+     * @param key           键
+     * @param valueScoreMap 成员元素及分数map key: 成员元素的值 value: 分数
+     * @return 被成功添加的新成员的数量，不包括那些被更新的、已经存在的成员。
+     */
+    long zAdd(String key, Map<String, Double> valueScoreMap);
     // ===== ops for set end =====
 }
