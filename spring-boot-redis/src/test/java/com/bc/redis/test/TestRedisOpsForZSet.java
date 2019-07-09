@@ -55,4 +55,37 @@ public class TestRedisOpsForZSet {
         long addNum = redisDao.zAdd(key, valueScoreMap);
         logger.info("add element to zset, add num: " + addNum);
     }
+
+    /**
+     * 测试zcard
+     */
+    @Test
+    public void testZcard() {
+        String key = "zsetKey";
+        long setSize = redisDao.zCard(key);
+        logger.info("set's size: " + setSize);
+    }
+
+    /**
+     * 测试zcount
+     */
+    @Test
+    public void testZcount() {
+        String key = "zsetKey";
+        double min = 0.3;
+        double max = 2.3;
+        logger.info("section: [" + min + ", " + max + "], count: " +
+                redisDao.zCount(key, min, max));
+    }
+
+    /**
+     * 测试zincrby
+     */
+    @Test
+    public void testZincrementScore() {
+        String key = "zsetKey";
+        String value = "zsetValue";
+        double incrResult = redisDao.zIncrementScore(key, value, -6);
+        logger.info("zset incr, result: " + incrResult);
+    }
 }

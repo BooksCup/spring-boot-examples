@@ -713,5 +713,36 @@ public interface RedisDao {
      * @return 被成功添加的新成员的数量，不包括那些被更新的、已经存在的成员。
      */
     long zAdd(String key, Map<String, Double> valueScoreMap);
+
+    /**
+     * 计算集合中元素的数量
+     *
+     * @param key 键
+     * @return 当key存在且是有序集类型时，返回有序集的基数。当key不存在时，返回0
+     */
+    long zCard(String key);
+
+    /**
+     * 计算有序集合中指定分数区间的成员数量
+     *
+     * @param key 键
+     * @param min 最小分
+     * @param max 最大分
+     * @return 分数值在min和max之间的成员的数量
+     */
+    long zCount(String key, double min, double max);
+
+    /**
+     * 对有序集合中指定成员的分数加上增量increment
+     * 可以通过传递一个负数值increment，让分数减去相应的值，比如ZINCRBY key -5 member，就是让member的score值减去5
+     * 当key不存在，或分数不是key的成员时，ZINCRBY key increment member等同于ZADD key increment member
+     * 当key不是有序集类型时，返回一个错误
+     *
+     * @param key   键
+     * @param value 值
+     * @param delta 分数增量(可以为负数)
+     * @return member成员的新分数值
+     */
+    double zIncrementScore(String key, Object value, double delta);
     // ===== ops for set end =====
 }
