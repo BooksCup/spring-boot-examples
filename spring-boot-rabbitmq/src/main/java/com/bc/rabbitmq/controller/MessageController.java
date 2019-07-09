@@ -1,6 +1,7 @@
 package com.bc.rabbitmq.controller;
 
 import com.bc.rabbitmq.enums.ResponseMsg;
+import com.bc.rabbitmq.message.direct.DirectSender;
 import com.bc.rabbitmq.message.fanout.FanoutSender;
 import com.bc.rabbitmq.message.topic.TopicSender;
 import io.swagger.annotations.ApiOperation;
@@ -33,6 +34,9 @@ public class MessageController {
 
     @Resource
     private TopicSender topicSender;
+
+    @Resource
+    private DirectSender directSender;
 
     /**
      * 发送消息至fanout交换机
@@ -74,6 +78,28 @@ public class MessageController {
                     HttpStatus.OK);
         } catch (Exception e) {
             logger.error("send message to topic exchange error: " + e.getMessage());
+            responseEntity = new ResponseEntity<>(ResponseMsg.MESSAGE_SEND_ERROR.value(),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return responseEntity;
+    }
+
+    /**
+     * 发送消息至direct交换机
+     *
+     * @param message 消息
+     * @return ResponseEntity
+     */
+    @ApiOperation(value = "发送消息至direct交换机", notes = "发送消息至direct交换机")
+    @PostMapping(value = "/direct")
+    public ResponseEntity<String> sendMessageToDirectExchange(@RequestParam String message) {
+        ResponseEntity<String> responseEntity;
+        try {
+            directSender.send(message);
+            responseEntity = new ResponseEntity<>(ResponseMsg.MESSAGE_SEND_SUCCESS.value(),
+                    HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("send message to direct exchange error: " + e.getMessage());
             responseEntity = new ResponseEntity<>(ResponseMsg.MESSAGE_SEND_ERROR.value(),
                     HttpStatus.INTERNAL_SERVER_ERROR);
         }
