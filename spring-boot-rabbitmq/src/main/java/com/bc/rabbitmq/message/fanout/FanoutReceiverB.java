@@ -10,20 +10,20 @@ import org.springframework.stereotype.Component;
  * 消息接受者
  * 交换机类型: fanout
  * 交换机: fanoutExchange
- * 绑定队列: fanout.A
+ * 绑定队列: fanout.B
  *
  * @author zhou
  */
 @Component
-@RabbitListener(queues = "fanout.A")
-public class FanoutReceiverA {
+@RabbitListener(queues = "fanout.B")
+public class FanoutReceiverB {
     /**
      * 日志
      */
-    private static final Logger logger = LoggerFactory.getLogger(FanoutReceiverA.class);
+    private static final Logger logger = LoggerFactory.getLogger(FanoutReceiverB.class);
 
     @RabbitHandler
     public void process(String message) {
-        logger.info("fanout receiver A: " + message);
+        logger.info("fanout receiver B: " + message);
     }
 }
