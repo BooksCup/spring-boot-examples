@@ -88,4 +88,32 @@ public class TestRedisOpsForZSet {
         double incrResult = redisDao.zIncrementScore(key, value, -6);
         logger.info("zset incr, result: " + incrResult);
     }
+
+    /**
+     * 测试zinterstore
+     */
+    @Test
+    public void testZintersectAndStore() {
+        String key = "zsetKey";
+        String otherKey = "zsetKey2";
+        String destKey = "zsetKey3";
+        long destZsetSize = redisDao.zIntersectAndStore(key, otherKey, destKey);
+        logger.info("dest zset size: " + destZsetSize);
+    }
+
+    /**
+     * 测试zinterstore
+     */
+    @Test
+    public void testZintersectAndStoreWithManyOtherKeys() {
+        String key = "zsetKey";
+        String otherKey = "zsetKey2";
+        String otherKey2 = "zsetKey3";
+        List<String> otherKeys = new ArrayList<>();
+        otherKeys.add(otherKey);
+        otherKeys.add(otherKey2);
+        String destKey = "zsetKey4";
+        long destZsetSize = redisDao.zIntersectAndStore(key, otherKeys, destKey);
+        logger.info("dest zset size: " + destZsetSize);
+    }
 }

@@ -4,6 +4,7 @@ import com.bc.redis.dao.RedisDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.RedisZSetCommands;
 import org.springframework.data.redis.core.DefaultTypedTuple;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
@@ -1019,6 +1020,34 @@ public class RedisDaoImpl implements RedisDao {
     @Override
     public double zIncrementScore(String key, Object value, double delta) {
         return redisTemplate.opsForZSet().incrementScore(key, value, delta);
+    }
+
+    /**
+     * 计算给定的两个有序集的交集，并将该交集(结果集)储存到destination
+     * 结果集中某个成员的分数值是所有给定集下该成员分数值之和
+     *
+     * @param key      第一个键
+     * @param otherKey 第二个键
+     * @param destKey  destination
+     * @return 保存到目标结果集的的成员数量
+     */
+    @Override
+    public long zIntersectAndStore(String key, String otherKey, String destKey) {
+        return redisTemplate.opsForZSet().intersectAndStore(key, otherKey, destKey);
+    }
+
+    /**
+     * 计算给定的多个有序集的交集，并将该交集(结果集)储存到destination
+     * 结果集中某个成员的分数值是所有给定集下该成员分数值之和
+     *
+     * @param key       第一个键
+     * @param otherKeys 其他键
+     * @param destKey   destination
+     * @return 保存到目标结果集的的成员数量
+     */
+    @Override
+    public long zIntersectAndStore(String key, Collection<String> otherKeys, String destKey) {
+        return redisTemplate.opsForZSet().intersectAndStore(key, otherKeys, destKey);
     }
     // ===== ops for zset end =====
 

@@ -744,5 +744,27 @@ public interface RedisDao {
      * @return member成员的新分数值
      */
     double zIncrementScore(String key, Object value, double delta);
+
+    /**
+     * 计算给定的两个有序集的交集，并将该交集(结果集)储存到destination
+     * 结果集中某个成员的分数值是所有给定集下该成员分数值之和
+     *
+     * @param key      第一个键，也是产生结果集的key
+     * @param otherKey 第二个键
+     * @param destKey  destination
+     * @return 保存到目标结果集的的成员数量
+     */
+    long zIntersectAndStore(String key, String otherKey, String destKey);
+
+    /**
+     * 计算给定的多个有序集的交集，并将该交集(结果集)储存到destination
+     * 结果集中某个成员的分数值是所有给定集下该成员分数值之和
+     *
+     * @param key       第一个键
+     * @param otherKeys 其他键
+     * @param destKey   destination
+     * @return 保存到目标结果集的的成员数量
+     */
+    long zIntersectAndStore(String key, Collection<String> otherKeys, String destKey);
     // ===== ops for set end =====
 }
