@@ -30,6 +30,7 @@ public class NginxAccessLogServiceImpl implements NginxAccessLogService {
     /**
      * 分页查询Nginx访问日志
      *
+     * @param uri           uri
      * @param status        HTTP状态码
      * @param page          页码
      * @param pageSize      每页记录的条数
@@ -38,10 +39,15 @@ public class NginxAccessLogServiceImpl implements NginxAccessLogService {
      * @return 包含Nginx访问日志列表的分页信息
      */
     @Override
-    public PageImpl<NginxAccessLog> getNginxAccessLogPageByStatus(Integer status,
-                                                                  Integer page, Integer pageSize, String sortField, String sortDirection) {
-        Query query = Query.query(Criteria.where("status").is(status));
-
+    public PageImpl<NginxAccessLog> getNginxAccessLogPageByStatus(
+            String uri, Integer status, Integer page, Integer pageSize, String sortField, String sortDirection) {
+        Query query = new Query();
+        if (!StringUtils.isEmpty(uri)) {
+            query.addCriteria(Criteria.where("uri").is(uri));
+        }
+        if (null != status) {
+            query.addCriteria(Criteria.where("status").is(status));
+        }
         page = page - 1 < 0 ? 0 : page - 1;
         Pageable pageable = PageRequest.of(page, pageSize);
         query.with(pageable);

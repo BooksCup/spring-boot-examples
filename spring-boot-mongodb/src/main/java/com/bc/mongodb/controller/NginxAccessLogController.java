@@ -36,6 +36,7 @@ public class NginxAccessLogController {
     /**
      * 分页查询Nginx访问日志
      *
+     * @param uri           uri
      * @param status        HTTP状态码
      * @param page          页码
      * @param pageSize      每页记录的条数
@@ -46,7 +47,8 @@ public class NginxAccessLogController {
     @ApiOperation(value = "分页查询Nginx访问日志", notes = "分页查询Nginx访问日志")
     @PostMapping(value = "")
     public ResponseEntity<PageImpl<NginxAccessLog>> getNginxAccessLogPage(
-            @RequestParam Integer status,
+            @RequestParam(value = "uri", required = false) String uri,
+            @RequestParam(value = "status", required = false) Integer status,
             @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
             @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize,
             @RequestParam(value = "sortField", required = false) String sortField,
@@ -54,7 +56,7 @@ public class NginxAccessLogController {
 
         try {
             PageImpl<NginxAccessLog> nginxAccessLogPage = nginxAccessLogService.
-                    getNginxAccessLogPageByStatus(status, page, pageSize, sortField, sortDirection);
+                    getNginxAccessLogPageByStatus(uri, status, page, pageSize, sortField, sortDirection);
             return new ResponseEntity<>(nginxAccessLogPage, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("getNginxAccessLogPage error: " + e.getMessage());
