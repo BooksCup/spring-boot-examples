@@ -10,7 +10,7 @@
     <packaging>jar</packaging>
 
     <name>spring-boot-mongodb</name>
-    <description>Spring boot上整合mongodb</description>
+    <description>Spring boot整合mongodb</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
