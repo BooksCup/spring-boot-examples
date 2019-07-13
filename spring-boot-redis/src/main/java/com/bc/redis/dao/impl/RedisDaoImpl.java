@@ -4,7 +4,6 @@ import com.bc.redis.dao.RedisDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.connection.RedisZSetCommands;
 import org.springframework.data.redis.core.DefaultTypedTuple;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
@@ -1087,6 +1086,19 @@ public class RedisDaoImpl implements RedisDao {
     @Override
     public long zRemoveRange(String key, long start, long end) {
         return redisTemplate.opsForZSet().removeRange(key, start, end);
+    }
+
+    /**
+     * 移除有序集中，指定分数(score)区间(闭合区间,>= <=)内的所有成员
+     *
+     * @param key 键
+     * @param min 区间最小值
+     * @param max 区间最大值
+     * @return 被移除成员的数量
+     */
+    @Override
+    public long zRemoveRangeByScore(String key, double min, double max) {
+        return redisTemplate.opsForZSet().removeRangeByScore(key, min, max);
     }
     // ===== ops for zset end =====
 

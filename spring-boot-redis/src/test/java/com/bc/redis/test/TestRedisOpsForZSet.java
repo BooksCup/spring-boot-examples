@@ -150,4 +150,14 @@ public class TestRedisOpsForZSet {
         long removeNum = redisDao.zRemoveRange(key, 0, 2);
         logger.info("remove num: " + removeNum);
     }
+
+    /**
+     * 测试zrangebyscore
+     */
+    @Test
+    public void testZremoveRangeByScore(){
+        String key = "zsetKey";
+        long removeNum = redisDao.zRemoveRangeByScore(key, 1.2, 6);
+        logger.info("remove num: " + removeNum);
+    }
 }
