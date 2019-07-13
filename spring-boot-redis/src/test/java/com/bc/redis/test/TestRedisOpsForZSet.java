@@ -185,4 +185,16 @@ public class TestRedisOpsForZSet {
             logger.info("value: " + tuple.getValue() + ", score: " + tuple.getScore());
         }
     }
+
+    /**
+     * 测试zrevrangebyscore
+     */
+    @Test
+    public void testZReverseRangeByScore() {
+        String key = "zsetKey";
+        Set<Object> valueSet = redisDao.zReverseRangeByScore(key, 1, 9);
+        for (Object value : valueSet) {
+            logger.info("value: " + value);
+        }
+    }
 }
