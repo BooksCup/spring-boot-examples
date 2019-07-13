@@ -1092,8 +1092,8 @@ public class RedisDaoImpl implements RedisDao {
      * 移除有序集中，指定分数(score)区间(闭合区间,>= <=)内的所有成员
      *
      * @param key 键
-     * @param min 区间最小值
-     * @param max 区间最大值
+     * @param min 分数区间最小值
+     * @param max 分数区间最大值
      * @return 被移除成员的数量
      */
     @Override
