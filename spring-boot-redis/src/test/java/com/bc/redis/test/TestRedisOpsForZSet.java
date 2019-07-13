@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
@@ -169,7 +170,19 @@ public class TestRedisOpsForZSet {
         String key = "zsetKey";
         Set<Object> valueSet = redisDao.zReverseRange(key, 0, 2);
         for (Object value : valueSet) {
-            logger.info("value:" + value);
+            logger.info("value: " + value);
+        }
+    }
+
+    /**
+     * 测试zrevrangeWithScores
+     */
+    @Test
+    public void testZreverseRangeWithScores() {
+        String key = "zsetKey";
+        Set<ZSetOperations.TypedTuple<Object>> tuples = redisDao.zReverseRangeWithScores(key, 0, 2);
+        for (ZSetOperations.TypedTuple<Object> tuple : tuples) {
+            logger.info("value: " + tuple.getValue() + ", score: " + tuple.getScore());
         }
     }
 }
