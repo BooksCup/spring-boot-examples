@@ -1100,6 +1100,22 @@ public class RedisDaoImpl implements RedisDao {
     public long zRemoveRangeByScore(String key, double min, double max) {
         return redisTemplate.opsForZSet().removeRangeByScore(key, min, max);
     }
+
+    /**
+     * 返回有序集中，指定区间内的成员
+     * 其中成员的位置按分数值递减(从大到小)来排列
+     * 具有相同分数值的成员按字典序的逆序(reverse lexicographical order)排列
+     * 除了成员按分数值递减的次序排列这一点外,zReverseRange的其他方面和zRange一样
+     *
+     * @param key   键
+     * @param start 区间开始
+     * @param end   区间结束
+     * @return 指定区间内，带有分数值的有序集成员的列表
+     */
+    @Override
+    public Set<Object> zReverseRange(String key, long start, long end) {
+        return redisTemplate.opsForZSet().reverseRange(key, start, end);
+    }
     // ===== ops for zset end =====
 
 }

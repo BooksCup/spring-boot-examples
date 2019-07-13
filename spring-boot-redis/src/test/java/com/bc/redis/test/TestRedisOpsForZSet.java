@@ -155,9 +155,21 @@ public class TestRedisOpsForZSet {
      * 测试zrangebyscore
      */
     @Test
-    public void testZremoveRangeByScore(){
+    public void testZremoveRangeByScore() {
         String key = "zsetKey";
         long removeNum = redisDao.zRemoveRangeByScore(key, 1.2, 6);
         logger.info("remove num: " + removeNum);
+    }
+
+    /**
+     * 测试zrevrange
+     */
+    @Test
+    public void testZreverseRange() {
+        String key = "zsetKey";
+        Set<Object> valueSet = redisDao.zReverseRange(key, 0, 2);
+        for (Object value : valueSet) {
+            logger.info("value:" + value);
+        }
     }
 }

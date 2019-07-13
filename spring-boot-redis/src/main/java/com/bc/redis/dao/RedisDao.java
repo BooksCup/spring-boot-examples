@@ -806,5 +806,18 @@ public interface RedisDao {
      * @return 被移除成员的数量
      */
     long zRemoveRangeByScore(String key, double min, double max);
+
+    /**
+     * 返回有序集中，指定区间内的成员
+     * 其中成员的位置按分数值递减(从大到小)来排列
+     * 具有相同分数值的成员按字典序的逆序(reverse lexicographical order)排列
+     * 除了成员按分数值递减的次序排列这一点外,zReverseRange的其他方面和zRange一样
+     *
+     * @param key   键
+     * @param start 区间开始
+     * @param end   区间结束
+     * @return 指定区间内，带有分数值的有序集成员的列表
+     */
+    Set<Object> zReverseRange(String key, long start, long end);
     // ===== ops for set end =====
 }
