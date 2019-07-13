@@ -197,4 +197,16 @@ public class TestRedisOpsForZSet {
             logger.info("value: " + value);
         }
     }
+
+    /**
+     * 测试zrevrangebyscore(带分页)
+     */
+    @Test
+    public void testZReverseRangeByScoreWithPages() {
+        String key = "zsetKey";
+        Set<Object> valueSet = redisDao.zReverseRangeByScore(key, 1, 9, 1, 1);
+        for (Object value : valueSet) {
+            logger.info("value: " + value);
+        }
+    }
 }

@@ -847,5 +847,20 @@ public interface RedisDao {
      * @return 指定区间内的有序集成员的列表
      */
     Set<Object> zReverseRangeByScore(String key, double min, double max);
+
+    /**
+     * 返回有序集中指定分数区间内的所有的成员(带分页)
+     * 有序集成员按分数值递减(从大到小)的次序排列
+     * 具有相同分数值的成员按字典序的逆序(reverse lexicographical order)排列
+     * 除了成员按分数值递减的次序排列这一点外，zReverseRangeByScore的其他方面和zRangeByScore一样
+     *
+     * @param key    键
+     * @param min    分数区间最小值
+     * @param max    分数区间最大值
+     * @param offset 偏移量
+     * @param count  数量
+     * @return 指定区间内的有序集成员的列表
+     */
+    Set<Object> zReverseRangeByScore(String key, double min, double max, long offset, long count);
     // ===== ops for set end =====
 }
