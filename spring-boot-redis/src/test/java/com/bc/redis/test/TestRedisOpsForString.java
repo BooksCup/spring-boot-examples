@@ -39,7 +39,8 @@ public class TestRedisOpsForString {
     public void testSet() {
         String key = "testKey";
         String value = "testValue";
-        redisDao.set(key, value);
+        boolean setResult = redisDao.set(key, value);
+        logger.info("set result: " + setResult);
     }
 
     /**
@@ -49,7 +50,8 @@ public class TestRedisOpsForString {
     public void testSetExpire() {
         String key = "testExpireKey";
         String value = "testExpireValue";
-        redisDao.set(key, value, 10);
+        boolean setResult = redisDao.set(key, value, 10);
+        logger.info("set result: " + setResult);
     }
 
     /**
@@ -90,7 +92,8 @@ public class TestRedisOpsForString {
         map.put(key1, value1);
         map.put(key2, value2);
         map.put(key3, value3);
-        redisDao.multiSet(map);
+        boolean multiSetResult = redisDao.multiSet(map);
+        logger.info("multi set result: " + multiSetResult);
     }
 
     /**

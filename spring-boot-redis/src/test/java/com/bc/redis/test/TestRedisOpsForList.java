@@ -204,8 +204,8 @@ public class TestRedisOpsForList {
     @Test
     public void testListTrim() {
         String key = "listKey";
-        redisDao.lTrim(key, 1, -1);
-        logger.info("trim finish.");
+        boolean trimResult = redisDao.lTrim(key, 1, -1);
+        logger.info("trim finish. result: " + trimResult);
         List<Object> valueList = redisDao.lRange(key, 0, -1);
         logger.info("=== list value ===");
         for (Object value : valueList) {
@@ -234,7 +234,8 @@ public class TestRedisOpsForList {
         String key = "listKey1111";
         long index = 0L;
         String value = "value6";
-        redisDao.lSet(key, index, value);
+        boolean listSetResult = redisDao.lSet(key, index, value);
+        logger.info("list set result: " + listSetResult);
     }
 
     /**

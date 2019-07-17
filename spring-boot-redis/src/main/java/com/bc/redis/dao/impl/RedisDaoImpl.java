@@ -1370,9 +1370,11 @@ public class RedisDaoImpl implements RedisDao {
      * 具有相同分数值的成员按字典序的逆序(reverse lexicographical order)排列
      * 除了成员按分数值递减的次序排列这一点外，zReverseRangeByScore的其他方面和zRangeByScore一样
      *
-     * @param key 键
-     * @param min 分数区间最小值
-     * @param max 分数区间最大值
+     * @param key    键
+     * @param min    分数区间最小值
+     * @param max    分数区间最大值
+     * @param offset 偏移量
+     * @param count  数量
      * @return 指定区间内，带有分数值的有序集成员的列表
      */
     @Override
