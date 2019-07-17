@@ -746,6 +746,23 @@ public class RedisDaoImpl implements RedisDao {
         return redisTemplate.opsForHash().size(key);
     }
 
+    /**
+     * 为哈希表中的字段值加上指定增量值
+     * 增量也可以为负数，相当于对指定字段进行减法操作
+     * 如果哈希表的key不存在，一个新的哈希表被创建并执行HINCRBY命令
+     * 如果指定的字段不存在，那么在执行命令前，字段的值被初始化为0
+     * 对一个储存字符串值的字段执行HINCRBY命令将造成一个错误
+     *
+     * @param key     键
+     * @param hashKey 哈希键
+     * @param delta   增量值
+     * @return 执行HINCRBY命令之后，哈希表中字段的值
+     */
+    @Override
+    public long hIncrement(String key, String hashKey, long delta) {
+        return redisTemplate.opsForHash().increment(key, hashKey, delta);
+    }
+
     // ===== ops for hash end =====
 
     // ===== ops for set begin =====

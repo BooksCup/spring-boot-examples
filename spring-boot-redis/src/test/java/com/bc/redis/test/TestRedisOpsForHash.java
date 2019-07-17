@@ -125,4 +125,16 @@ public class TestRedisOpsForHash {
         long hashLength = redisDao.hSize(key);
         logger.info("hash length: " + hashLength);
     }
+
+    /**
+     * 测试hincrby
+     */
+    @Test
+    public void testHincrement() {
+        String key = "hKey";
+        String hashKey = "hField2";
+        long delta = 2L;
+        long result = redisDao.hIncrement(key, hashKey, delta);
+        logger.info("hash incr result: " + result);
+    }
 }
