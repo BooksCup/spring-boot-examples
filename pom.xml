@@ -24,9 +24,10 @@
     </build>
     <modules>
         <module>spring-boot-elasticsearch</module>
-        <module>spring-boot-redis</module>
-        <module>spring-boot-mongodb</module>
-        <module>spring-boot-rabbitmq</module>
         <module>spring-boot-kafka</module>
+        <module>spring-boot-mongodb</module>
+        <module>spring-boot-netty</module>
+        <module>spring-boot-rabbitmq</module>
+        <module>spring-boot-redis</module>
     </modules>
 </project>
